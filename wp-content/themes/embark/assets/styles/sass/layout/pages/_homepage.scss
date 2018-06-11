@@ -3,4 +3,44 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .homepage-template {
+	.intro {
+		background: green;
+
+		&__title {
+			position: relative;
+			max-width: 400px;
+
+			&:before,
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				width: 40px;
+				height: 40px;
+				background: url('../images/icon__arrow.svg') no-repeat;
+				background-size: contain;
+			}
+
+			&:before {
+				left: -50px;
+				top: 10px;
+			}
+
+			&:after {
+				right: -50px;
+				bottom: 10px;
+				transform: rotate(180deg);
+			}
+		}
+
+		&__content {
+			@include secondary-font('light');
+			@include fluid-type(22px, 26px, 1.2);
+			color: #fff;
+		}
+	}
+
+	.about-why {
+		background: rgba(#004c66, .24);
+	}
 }
