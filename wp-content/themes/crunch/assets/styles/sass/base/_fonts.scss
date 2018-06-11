@@ -1,0 +1,17 @@
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~ Fonts ~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+	/* ~~~~~~~~~~ Lato ~~~~~~~~~~ */
+
+	@mixin primary-font($fontWeight: "normal") {
+	    @if $fontWeight == "normal" {
+	        font-weight: 300;
+	    } @elseif $fontWeight == "medium" {
+	        font-weight: 400;
+	    } @elseif $fontWeight == "bold" {
+	        font-weight: 700;
+	    }
+	    font-family: 'Lato', sans-serif;
+	    font-style: normal;
+	}
