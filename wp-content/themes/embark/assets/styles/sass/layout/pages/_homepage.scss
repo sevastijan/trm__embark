@@ -5,9 +5,25 @@
 .homepage-template {
 	.intro {
 		@include element-spacing(2, 'top', 'padding');
-		@include element-spacing(3, 'bottom', 'padding');
+		padding-bottom: ($element-space__xs * 2);
 		background: url('../images/bgd__intro.png') no-repeat;
 		background-size: 100% 100%;
+
+		@include media-breakpoint-up(sm) {
+			padding-bottom: ($element-space__sm * 2);
+		}
+
+		@include media-breakpoint-up(md) {
+			padding-bottom: ($element-space__md * 3);
+		}
+
+		@include media-breakpoint-up(lg) {
+			padding-bottom: ($element-space__lg * 3);
+		}
+
+		@include media-breakpoint-up(xl) {
+			padding-bottom: ($element-space__xl * 3);
+		}
 
 		&__title-wrapper {
 			@include media-breakpoint-up(md) {
@@ -152,12 +168,283 @@
 
 	.for-who {
 		.single-for {
+			max-width: 510px;
+
 			&__icon {
-				max-width: 90px;
-				max-height: 75px;
+				width: 90px;
+				height: 75px;
 				margin-left: auto;
 				margin-right: auto;
+
+				path,
+				* {
+					stroke: #455963;
+					stroke-width: 3px;
+				}
 			}
+
+			&__accordion {
+				.card {
+					border: none;
+					border-radius: 0;
+					padding: 0;
+					margin-top: 10px;
+
+					.card-header {
+						padding: 0;
+						border-radius: 0;
+						border: none;
+						background: transparent;
+
+						&__button {
+							@include primary-font();
+							@include fluid-type(21px, 23px, 1.2);
+							border: none;
+							text-align: left;
+							background: rgba(#32bfbe, .2);
+							width: 100%;
+							color: #004c66;
+							padding: 5px 50px 5px 20px;
+							position: relative;
+
+							&[aria-expanded="true"] {
+								&:after {
+									transform: rotate(-45deg);
+									top: 15px;
+								}
+							}
+
+							&:after {
+								@extend %single-transition;
+								content: '';
+								position: absolute;
+								width: 13px;
+								height: 13px;
+								border-top: 1px solid #61656d;
+								border-right: 1px solid #61656d;
+								transform: rotate(135deg);
+								right: 15px;
+								top: 7.5px;
+							}
+						}
+					}
+
+					&__collapse {
+						padding: 0;
+
+						.card-body {
+							@include fluid-type(17px, 19px, 1.2);
+							padding: 10px !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.key-facts {
+		background: $secondary-color;
+
+		@include media-breakpoint-up(md) {
+			background: url('../images/bgd__keys.png') no-repeat;
+			background-size: 100% 100%;
+			padding-bottom: ($element-space__md * 5);
+		}
+
+		@include media-breakpoint-up(lg) {
+			padding-bottom: ($element-space__lg * 5);
+		}
+
+		@include media-breakpoint-up(xl) {
+			padding-bottom: ($element-space__xl * 5);
+		}
+
+		&__icon {
+			width: 63px;
+			height: 70px;
+			display: inline-block;
+			margin-right: 15px;
+
+			path,
+			* {
+				stroke-color: #fff;
+
+				@include media-breakpoint-up(md) {
+					stroke-color: $secondary-color;
+				}
+			}
+		}
+
+		&__title {
+			margin-top: 5px;
+			color: #fff;
+
+			@include media-breakpoint-up(md) {
+				color: #004c66;
+			}
+		}
+
+		&__content {
+			color: #fff;
+
+			@include media-breakpoint-up(md) {
+				color: #54565a;
+			}
+		}
+
+		&__image {
+			width: 100%;
+
+			@include media-breakpoint-up(md) {
+				width: 800px;
+				float: right;
+			}
+
+			@include media-breakpoint-up(lg) {
+				width: 900px;
+			}
+
+			@include media-breakpoint-up(xl) {
+				width: 1000px;
+			}
+		}
+
+		.single-fact {
+			&__icon {
+				width: 60px;
+				height: 60px;
+				margin-right: 15px;
+			}
+
+			&__title {
+				@include primary-font();
+				@include fluid-type(26px, 30px);
+				color: #004c66;
+			}
+
+			&__content {
+				@include primary-font();
+				@include fluid-type(18px, 21px, 1.2);
+				color: #fff;
+			}
+		}
+
+		.impression {
+			float: left;
+
+			&__title-wrapper {
+				@include media-breakpoint-up(md) {
+					padding-left: 40px;
+					max-width: 495px;
+				}
+
+				@include media-breakpoint-up(lg) {
+					padding-left: 45px;
+				}
+			}
+
+			&__title {
+				@include fluid-type(48px, 52px, 1.2);
+				color: #fff;
+				position: relative;
+				display: inline;
+				padding: 0 30px;
+
+				@include media-breakpoint-up(sm) {
+					padding: 0;
+				}
+
+				&:before,
+				&:after {
+					content: '';
+					display: inline-block;
+					width: 20px;
+					height: 20px;
+					background: url('../images/icon__arrow--white.svg') no-repeat;
+					background-size: contain;
+
+					@include media-breakpoint-up(sm) {
+						width: 25px;
+						height: 25px;
+					}
+
+					@include media-breakpoint-up(md) {
+						width: 30px;
+						height: 30px;
+					}
+
+					@include media-breakpoint-up(lg) {
+						width: 35px;
+						height: 35px;
+					}
+
+					@include media-breakpoint-up(xl) {
+						width: 40px;
+						height: 40px;
+					}
+				}
+
+				&:before {
+					left: 0;
+					top: 7.5px;
+					position: absolute;
+
+					@include media-breakpoint-up(sm) {
+						top: 2.5px;
+						left: -35px;
+					}
+
+					@include media-breakpoint-up(md) {
+						top: 0;
+						left: -40px;
+					}
+
+					@include media-breakpoint-up(xl) {
+						left: -50px;
+					}
+				}
+
+				&:after {
+					right: 0;
+					bottom: 10px;
+					transform: rotate(180deg);
+					margin-left: 10px;
+
+					@include media-breakpoint-up(xl) {
+						right: -50px;
+						margin-bottom: -5px;
+					}
+				}
+			}
+
+			&__content {
+				@include secondary-font('light');
+				@include fluid-type(22px, 26px, 1.2);
+				color: #fff;
+
+				@include media-breakpoint-up(md) {
+					padding-left: 40px;
+				}
+
+				@include media-breakpoint-up(lg) {
+					padding-left: 45px;
+				}
+			}
+		}
+	}
+
+	.get-in-touch {
+		@include media-breakpoint-up(md) {
+			padding-top: 0;
+			margin-top: ($element-space__md * -1);
+		}
+
+		@include media-breakpoint-up(lg) {
+			margin-top: ($element-space__lg * -1);
+		}
+
+		@include media-breakpoint-up(xl) {
+			margin-top: ($element-space__xl * -1);
 		}
 	}
 }
