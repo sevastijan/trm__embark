@@ -4,32 +4,91 @@
 
 .homepage-template {
 	.intro {
-		background: green;
+		@include element-spacing(2, 'top', 'padding');
+		@include element-spacing(3, 'bottom', 'padding');
+		background: url('../images/bgd__intro.png') no-repeat;
+		background-size: 100% 100%;
+
+		&__title-wrapper {
+			@include media-breakpoint-up(md) {
+				padding-left: 40px;
+				max-width: 495px;
+			}
+
+			@include media-breakpoint-up(lg) {
+				padding-left: 45px;
+			}
+		}
 
 		&__title {
 			position: relative;
-			max-width: 400px;
+			display: inline;
+			padding: 0 30px;
+
+			@include media-breakpoint-up(sm) {
+				padding: 0;
+			}
 
 			&:before,
 			&:after {
 				content: '';
-				display: block;
-				position: absolute;
-				width: 40px;
-				height: 40px;
+				display: inline-block;
+				width: 20px;
+				height: 20px;
 				background: url('../images/icon__arrow.svg') no-repeat;
 				background-size: contain;
+
+				@include media-breakpoint-up(sm) {
+					width: 25px;
+					height: 25px;
+				}
+
+				@include media-breakpoint-up(md) {
+					width: 30px;
+					height: 30px;
+				}
+
+				@include media-breakpoint-up(lg) {
+					width: 35px;
+					height: 35px;
+				}
+
+				@include media-breakpoint-up(xl) {
+					width: 40px;
+					height: 40px;
+				}
 			}
 
 			&:before {
-				left: -50px;
-				top: 10px;
+				left: 0;
+				top: 7.5px;
+				position: absolute;
+
+				@include media-breakpoint-up(sm) {
+					top: 2.5px;
+					left: -35px;
+				}
+
+				@include media-breakpoint-up(md) {
+					top: 0;
+					left: -40px;
+				}
+
+				@include media-breakpoint-up(xl) {
+					left: -50px;
+				}
 			}
 
 			&:after {
-				right: -50px;
+				right: 0;
 				bottom: 10px;
 				transform: rotate(180deg);
+				margin-left: 10px;
+
+				@include media-breakpoint-up(xl) {
+					right: -50px;
+					margin-bottom: -5px;
+				}
 			}
 		}
 
@@ -37,10 +96,68 @@
 			@include secondary-font('light');
 			@include fluid-type(22px, 26px, 1.2);
 			color: #fff;
+
+			@include media-breakpoint-up(md) {
+				padding-left: 40px;
+			}
+
+			@include media-breakpoint-up(lg) {
+				padding-left: 45px;
+			}
+		}
+
+		&__video-wrapper {
+			@include media-breakpoint-up(md) {
+				max-width: 520px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.video-bar {
+				background: #fff;
+				width: 100%;
+				height: 30px;
+				padding: 0 10px;
+
+				span {
+					border: 1px solid #61656d;
+					border-radius: 50%;
+					width: 13px;
+					height: 13px;
+					display: inline-block;
+					margin: 0 4px;
+				}
+			}
+
+			iframe {
+				width: 100%;
+				height: 300px;
+			}
 		}
 	}
 
+	.about-what {
+		@include element-spacing('-.5', 'top', 'margin');
+	}
+
 	.about-why {
-		background: rgba(#004c66, .24);
+		background: rgba(#004c66, .1);
+	}
+
+	.about-how {
+		&__content {
+			@include fluid-type(17px, 19px, 1.2);
+		}
+	}
+
+	.for-who {
+		.single-for {
+			&__icon {
+				max-width: 90px;
+				max-height: 75px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
 	}
 }
