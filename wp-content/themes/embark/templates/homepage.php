@@ -14,181 +14,206 @@
 	<section class="intro element-paddings">
 		<div class="container">
 			<div class="row justify-content-between">
-				<div class="col-md-6 col-lg-5">
-					<h1 class="intro__title">Grow your business with Quick, Simple and Accurate Data Capture</h1><!-- /.intro__title -->
-					<div class="intro__content content element-small-margin-top">
-						<p>Embark is a bespoke user-friendly on boarding process that allows you to increase sales volume, reach a larger audience and enlarge turnover, all with less effort.</p>
-					</div><!-- /.intro__content content element-small-margin-top -->
-				</div><!-- /.col-md-6 col-lg-5 -->
 				<div class="col-md-6">
-					video
+					<div class="intro__title-wrapper">
+						<h1 class="intro__title"><?php the_title(); ?></h1><!-- /.intro__title -->
+					</div><!-- /.intro__title-wrapper -->
+					<div class="intro__content content element-small-margin-top">
+						<?php the_content(); ?>
+					</div><!-- /.intro__content content element-small-margin-top -->
 				</div><!-- /.col-md-6 -->
+				<div class="col-md-6 text-center">
+					<a href="#" class="embark-button embark-button__full-background embark-button__full-background--secondary-color element-margin-top mt-md-0">See Embark in action</a>
+					<div class="intro__video-wrapper element-small-margin-top">
+						<div class="video-bar text-left"><span></span><span></span><span></span></div><!-- /.video-bar text-left -->
+						<?php the_field('intro_video'); ?>
+					</div><!-- /.intro__video-wrapper element-small-margin-top -->
+				</div><!-- /.col-md-6 text-center -->
 			</div><!-- /.row justify-content-between -->
 		</div><!-- /.container -->
 	</section><!-- /.intro element-paddings -->
 
-	<section class="about-what element-paddings">
+	<section class="about-what element-padding-bottom">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center">
-					<h2 class="about-what__title">What is Embark?</h2><!-- /.about-what__title -->
+					<h2 class="about-what__title"><?php the_field( 'what_title' ); ?></h2><!-- /.about-what__title -->
 					<div class="about-what__content content element-small-margin-top">
-						<p>Embark is a nucleus and starting point for an end-to-end process, providing one of the most powerful and flexible customer journey solutions available, allowing for increasing sales volumes and reducing client drop-off - enabling your business to grow faster.</p>
-						<p>This simple and user-friendly system will capture data accurately, provide insightful analytics, and allow you to process a client from enquiry to solution in less than two hours. </p>
+						<?php the_field( 'what_content' ); ?>
 					</div><!-- /.about-what__content content element-small-margin-top -->
 				</div><!-- /.col-12 text-center -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
-	</section><!-- /.about-what element-paddings -->
+	</section><!-- /.about-what element-padding-bottom -->
 
 	<section class="about-why element-paddings">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center">
-					<h2 class="about-why__title">Why is a good customer journey so important?</h2><!-- /.about-why__title -->
+					<h2 class="about-why__title"><?php the_field( 'why_title' ); ?></h2><!-- /.about-why__title -->
 					<div class="about-why__content content element-small-margin-top">
-						<p>Customers often avoid spending a long time completing unnecessary forms or persisting with slow and complex processes – ease of use is now an expectation rather than a luxury, and losing customers when your existing processes are slow and laborious is costly and a drain on your resources.</p>
-						<p>Embark as been developed as a simple and effective way of engaging with your customers accurately, quickly and securely. You collect the right information from both your customers and third party organisations whilst providing transparency and accountability throughout the whole journey. </p>
+						<?php the_field( 'why_content' ); ?>
 					</div><!-- /.about-why__content content element-small-margin-top -->
 				</div><!-- /.col-12 text-center -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
 	</section><!-- /.about-why element-paddings -->
 
-	<section class="about-how element-paddings">
+	<section class="about-how element-padding-top">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-11 col-lg-10 mx-auto">
-					<h2 class="about-how__title text-center">How does it work?</h2><!-- /.about-how__title text-center -->
+				<div class="col-md-10 col-lg-9 mx-auto">
+					<h2 class="about-how__title text-center"><?php the_field( 'how_title' ); ?></h2><!-- /.about-how__title text-center -->
 					<div class="about-how__content content element-small-margin-top">
-						<p>
-							<ul>
-								<li>By providing a fast and secure on-boarding journey to capture customer information accurately, first time</li>
-								<li>Obtain detailed customer financial analysis straight from trusted credit referencing partners</li>
-								<li>Create a complete customer journey, utilising our payment and distribution modules to deliver a definitive end-to-end product</li>
-								<li>Give your customers a secure digital channel as an option to communicate with you</li>
-								<li>Improve your products and services by better understanding your customers’ needs</li>
-								<li>Keep customer information up-to-date throughout the full life cycle of your relationship</li>
-							</ul>
-						</p>
+						<?php the_field( 'how_content' ); ?>
 					</div><!-- /.about-how__content content element-small-margin-top -->
-				</div><!-- /.col-md-11 col-lg-10 mx-auto -->
+				</div><!-- /.col-md-10 col-lg-9 mx-auto -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
-	</section><!-- /.about-how element-paddings -->
+	</section><!-- /.about-how element-padding-top -->
 
-	<section class="for-who element-paddings">
+	<section class="for-who element-padding-top">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6 text-auto">
-					<div class="single-for">
-						<img src="" alt="" class="single-for__icon svg" />
-						<h2 class="single-for__title">Embark for your customers</h2><!-- /.single-for__title -->
-						<div class="single-for__content content element-small-margin-top">
-							<p>Customers can provide you with information either online, via an interactive app or over the phone – whichever is easiest for them.</p>
+			<div class="row justify-content-between">
+				<div class="col-md-6 text-auto col-xl-auto">
+					<div class="single-for text-center">
+
+						<?php $icon = get_field( 'for_who_icon_1' ); ?>
+						<?php if($icon): ?>
+
+							<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-for__icon svg" />
+
+						<?php endif; ?>
+
+						<h2 class="single-for__title element-extra-small-margin-top"><?php the_field( 'for_who_title_1' ); ?></h2><!-- /.single-for__title element-extra-small-margin-top -->
+						<div class="single-for__content content element-small-margin-top" data-mh="single-for-match-height">
+							<?php the_field( 'for_who_content_1' ); ?>
 						</div><!-- /.single-for__content content element-small-margin-top -->
 
-						<div class="single-for__accordion accordion element-medium-margin-top" id="accordion-1">
-							<div class="card">
-								<div class="card-header" id="heading_one_1">
-									<button class="card-header__button" type="button" data-toggle="collapse" data-target="#collapse_one_1" aria-expanded="true" aria-controls="collapse_one_1">Convenient and easy-to-use</button>
-								</div><!-- /#heading_one_1.card-header -->
-								<div id="collapse_one_1" class="collapse show" aria-labelledby="heading_one" data-parent="#accordion-1">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_one_1.collapse show -->
-							</div><!-- /.card -->
-							<div class="card">
-								<div class="card-header" id="heading_one_2">
-									<button class="card-header__button collapsed" type="button" data-toggle="collapse" data-target="#collapse_one_2" aria-expanded="false" aria-controls="collapse_one_2">Convenient and easy-to-use</button>
-								</div><!-- /#heading_one_2.card-header -->
-								<div id="collapse_one_2" class="collapse" aria-labelledby="heading_one" data-parent="#accordion-1">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_one_2.collapse -->
-							</div><!-- /.card -->
-							<div class="card">
-								<div class="card-header" id="heading_one_3">
-									<button class="card-header__button collapsed" type="button" data-toggle="collapse" data-target="#collapse_one_3" aria-expanded="false" aria-controls="collapse_one_3">Convenient and easy-to-use</button>
-								</div><!-- /#heading_one_3.card-header -->
-								<div id="collapse_one_3" class="collapse" aria-labelledby="heading_one" data-parent="#accordion-1">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_one_3.collapse -->
-							</div><!-- /.card -->
-						</div><!-- /#accordion-1.single-for__accordion accordion element-medium-margin-top -->
-					</div><!-- /.single-for -->
-				</div><!-- /.col-md-6 text-auto -->
-				<div class="col-md-6 text-auto">
-					<div class="single-for">
-						<img src="" alt="" class="single-for__icon svg" />
-						<h2 class="single-for__title">Embark for your customers</h2><!-- /.single-for__title -->
-						<div class="single-for__content content element-small-margin-top">
-							<p>Customers can provide you with information either online, via an interactive app or over the phone – whichever is easiest for them.</p>
+						<?php if ( have_rows( 'for_who_accordion_1' ) ) : ?>
+
+							<div class="single-for__accordion accordion text-left element-medium-margin-top" id="accordion-1">
+
+								<?php $loop_counter = 1; ?>
+								<?php while ( have_rows( 'for_who_accordion_1' ) ) : the_row(); ?>
+
+									<div class="card">
+										<div class="card-header" id="heading_one_<?= $loop_counter; ?>">
+											<button class="card-header__button<?php if($loop_counter > 1) echo ' collapsed'; ?>" type="button" data-toggle="collapse" data-target="#collapse_one_<?= $loop_counter; ?>" aria-expanded="<?php if($loop_counter == 1) {echo 'true';} else {echo 'false';} ?>" aria-controls="collapse_one_<?= $loop_counter; ?>"><?php the_sub_field( 'label' ); ?></button>
+										</div><!-- /#heading_one_1.card-header -->
+										<div id="collapse_one_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_one" data-parent="#accordion-1">
+											<div class="card-body content">
+												<?php the_sub_field( 'content' ); ?>
+											</div><!-- /.card-body content -->
+										</div><!-- /#collapse_one_1.collapse show -->
+									</div><!-- /.card -->
+
+									<?php $loop_counter++; ?>
+								<?php endwhile; ?>
+
+							</div><!-- /#accordion-1.single-for__accordion accordion text-left element-medium-margin-top -->
+
+						<?php endif; ?>
+
+					</div><!-- /.single-for text-center -->
+				</div><!-- /.col-md-6 text-auto col-xl-auto -->
+				<div class="col-md-6 text-auto col-xl-auto">
+					<div class="single-for element-margin-top mt-md-0 text-center">
+
+						<?php $icon = get_field( 'for_who_icon_2' ); ?>
+						<?php if($icon): ?>
+
+							<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-for__icon svg" />
+
+						<?php endif; ?>
+
+						<h2 class="single-for__title element-extra-small-margin-top"><?php the_field( 'for_who_title_2' ); ?></h2><!-- /.single-for__title element-extra-small-margin-top -->
+						<div class="single-for__content content element-small-margin-top" data-mh="single-for-match-height">
+							<?php the_field( 'for_who_content_2' ); ?>
 						</div><!-- /.single-for__content content element-small-margin-top -->
 
-						<div class="single-for__accordion accordion element-medium-margin-top" id="accordion-2">
-							<div class="card">
-								<div class="card-header" id="heading_two_1">
-									<button class="card-header__button" type="button" data-toggle="collapse" data-target="#collapse_two_1" aria-expanded="true" aria-controls="collapse_two_1">Convenient and easy-to-use</button>
-								</div><!-- /#heading_two_1.card-header -->
-								<div id="collapse_two_1" class="collapse show" aria-labelledby="heading_two" data-parent="#accordion-2">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_two_1.collapse show -->
-							</div><!-- /.card -->
-							<div class="card">
-								<div class="card-header" id="heading_two_2">
-									<button class="card-header__button collapsed" type="button" data-toggle="collapse" data-target="#collapse_two_2" aria-expanded="false" aria-controls="collapse_two_2">Convenient and easy-to-use</button>
-								</div><!-- /#heading_two_2.card-header -->
-								<div id="collapse_two_2" class="collapse" aria-labelledby="heading_two" data-parent="#accordion-2">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_two_2.collapse -->
-							</div><!-- /.card -->
-							<div class="card">
-								<div class="card-header" id="heading_two_3">
-									<button class="card-header__button collapsed" type="button" data-toggle="collapse" data-target="#collapse_two_3" aria-expanded="false" aria-controls="collapse_two_3">Convenient and easy-to-use</button>
-								</div><!-- /#heading_two_3.card-header -->
-								<div id="collapse_two_3" class="collapse" aria-labelledby="heading_two" data-parent="#accordion-2">
-									<div class="card-body">
-										<p>Embark is fully modular and customisable. This means you can utilise as many or as few of our services as you need to.</p>
-									</div><!-- /.card-body -->
-								</div><!-- /#collapse_two_3.collapse -->
-							</div><!-- /.card -->
-						</div><!-- /#accordion-1.single-for__accordion accordion element-medium-margin-top -->
-					</div><!-- /.single-for -->
-				</div><!-- /.col-md-6 text-auto -->
-			</div><!-- /.row -->
+						<?php if ( have_rows( 'for_who_accordion_1' ) ) : ?>
+
+							<div class="single-for__accordion accordion text-left element-medium-margin-top" id="accordion-2">
+
+								<?php $loop_counter = 1; ?>
+								<?php while ( have_rows( 'for_who_accordion_1' ) ) : the_row(); ?>
+
+									<div class="card">
+										<div class="card-header" id="heading_two_<?= $loop_counter; ?>">
+											<button class="card-header__button<?php if($loop_counter > 1) echo ' collapsed'; ?>" type="button" data-toggle="collapse" data-target="#collapse_two_<?= $loop_counter; ?>" aria-expanded="<?php if($loop_counter == 1) {echo 'true';} else {echo 'false';} ?>" aria-controls="collapse_two_<?= $loop_counter; ?>"><?php the_sub_field( 'label' ); ?></button>
+										</div><!-- /#heading_two_1.card-header -->
+										<div id="collapse_two_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_two" data-parent="#accordion-2">
+											<div class="card-body content">
+												<?php the_sub_field( 'content' ); ?>
+											</div><!-- /.card-body content -->
+										</div><!-- /#collapse_one_1.collapse show -->
+									</div><!-- /.card -->
+
+									<?php $loop_counter++; ?>
+								<?php endwhile; ?>
+
+							</div><!-- /#accordion-2.single-for__accordion accordion text-left element-medium-margin-top -->
+
+						<?php endif; ?>
+
+					</div><!-- /.single-for element-margin-top mt-md-0 text-center -->
+				</div><!-- /.col-md-6 text-auto col-xl-auto -->
+			</div><!-- /.row justify-content-between -->
 		</div><!-- /.container -->
-	</section><!-- /.for-who element-paddings -->
+	</section><!-- /.for-who element-padding-top -->
 
-	<section class="key-facts element-paddings">
+	<section class="key-facts element-paddings element-margin-top mt-md-0">
 		<div class="container">
-			<div class="row">
-				<div class="col">
-					<img src="" alt="" class="key-facts__icon" />
-				</div><!-- /.col -->
-				<div class="col">
-					<h2 class="key-facts__title">Key facts</h2><!-- /.key-facts__title -->
-				</div><!-- /.col -->
-				<div class="col-12">
-					<div class="key-facts__content content element-small-margin-top">
-						<p>Having a system which lets your agents work with a customer is great. Having one that customers can use themselves too is even better</p>
-					</div><!-- /.key-facts__content content element-small-margin-top -->
-				</div><!-- /.col-12 -->
-			</div><!-- /.row -->
 			<div class="row">
 				<div class="col-md-6">
-					<img src="" alt="" class="key-facts__image" />
+					<div class="row no-gutters">
+
+						<?php $icon = get_field( 'key_facts_icon' ); ?>
+						<?php if($icon): ?>
+
+							<div class="col col-auto">
+								<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="key-facts__icon svg" />
+							</div><!-- /.col col-auto -->
+
+						<?php endif; ?>
+
+						<div class="col">
+							<h2 class="key-facts__title"><?php the_field( 'key_facts_title' ); ?></h2><!-- /.key-facts__title -->
+						</div><!-- /.col -->
+						<div class="col-12">
+							<div class="key-facts__content content element-extra-small-margin-top">
+								<?php the_field( 'key_facts_content' ); ?>
+							</div><!-- /.key-facts__content content element-extra-small-margin-top -->
+						</div><!-- /.col-12 -->
+					</div><!-- /.row no-gutters -->
+				</div><!-- /.col-md-6 -->
+			</div><!-- /.row -->
+
+			<div class="row">
+				<div class="col-md-6">
+
+					<?php $image = get_field( 'key_facts_image' ); ?>
+					<?php if($image): ?>
+
+						<img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>" class="key-facts__image element-margin-top w-100 d-md-none" />
+
+						<svg id="Warstwa_1" class="key-facts__image element-margin-top d-none d-md-block" data-name="Warstwa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1351.92 833.76">
+							<defs>
+								<style>.cls-1{fill:#fff;}</style>
+							</defs>
+							<title>laptop</title>
+
+							<image width="5633" height="4224" transform="translate(0 -180) scale(0.24)" xlink:href="<?php echo get_template_directory_uri(); ?>/images/laptop.png"/>
+							<image id="image-em" x="228" y="40" width="918" height="571" xlink:href="<?= $image['url']; ?>"></image>
+						</svg>
+
+					<?php endif; ?>
 
 					<div class="impression element-margin-top d-none d-md-block">
-						<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+						<div class="impression__title-wrapper">
+							<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+						</div><!-- /.impression__title-wrapper -->
 						<div class="impression__content content">
 							<p>Embark will bring your customers on-board and facilitate a lasting relationship</p>
 						</div><!-- /.impression__content content -->
@@ -196,61 +221,38 @@
 
 				</div><!-- /.col-md-6 -->
 				<div class="col-md-6">
-					<div class="single-fact element-medium-margin-top">
-						<div class="row">
-							<div class="col col-auto">
-								<img src="" alt="" class="single-fact__icon" />
-							</div><!-- /.col col-auto -->
-							<div class="col">
-								<h3 class="single-fact__title">Accurate insight</h3><!-- /.single-fact__title -->
-								<div class="single-fact__content content elelement-small-margin-top">
-									<p>Real-time data reports and summaries for you and your customers</p>
-								</div><!-- /.single-fact__content content elelement-small-margin-top -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.single-fact element-medium-margin-top -->
-					<div class="single-fact element-medium-margin-top">
-						<div class="row">
-							<div class="col col-auto">
-								<img src="" alt="" class="single-fact__icon" />
-							</div><!-- /.col col-auto -->
-							<div class="col">
-								<h3 class="single-fact__title">Accurate insight</h3><!-- /.single-fact__title -->
-								<div class="single-fact__content content elelement-small-margin-top">
-									<p>Real-time data reports and summaries for you and your customers</p>
-								</div><!-- /.single-fact__content content elelement-small-margin-top -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.single-fact element-medium-margin-top -->
-					<div class="single-fact element-medium-margin-top">
-						<div class="row">
-							<div class="col col-auto">
-								<img src="" alt="" class="single-fact__icon" />
-							</div><!-- /.col col-auto -->
-							<div class="col">
-								<h3 class="single-fact__title">Accurate insight</h3><!-- /.single-fact__title -->
-								<div class="single-fact__content content elelement-small-margin-top">
-									<p>Real-time data reports and summaries for you and your customers</p>
-								</div><!-- /.single-fact__content content elelement-small-margin-top -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.single-fact element-medium-margin-top -->
-					<div class="single-fact element-medium-margin-top">
-						<div class="row">
-							<div class="col col-auto">
-								<img src="" alt="" class="single-fact__icon" />
-							</div><!-- /.col col-auto -->
-							<div class="col">
-								<h3 class="single-fact__title">Accurate insight</h3><!-- /.single-fact__title -->
-								<div class="single-fact__content content elelement-small-margin-top">
-									<p>Real-time data reports and summaries for you and your customers</p>
-								</div><!-- /.single-fact__content content elelement-small-margin-top -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.single-fact element-medium-margin-top -->
+
+					<?php if ( have_rows( 'key_facts' ) ) : ?>
+						<?php while ( have_rows( 'key_facts' ) ) : the_row(); ?>
+
+							<div class="single-fact element-medium-margin-top">
+								<div class="row no-gutters">
+
+									<?php $icon = get_sub_field( 'icon' ); ?>
+									<?php if($icon): ?>
+
+										<div class="col col-auto">
+											<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-fact__icon svg" />
+										</div><!-- /.col col-auto -->
+
+									<?php endif; ?>
+
+									<div class="col">
+										<h3 class="single-fact__title"><?php the_sub_field( 'title' ); ?></h3><!-- /.single-fact__title -->
+										<div class="single-fact__content content element-extra-small-margin-top">
+											<?php the_sub_field( 'content' ); ?>
+										</div><!-- /.single-fact__content content element-extra-small-margin-top -->
+									</div><!-- /.col -->
+								</div><!-- /.row no-gutters -->
+							</div><!-- /.single-fact element-medium-margin-top -->
+
+						<?php endwhile; ?>
+					<?php endif; ?>
 
 					<div class="impression element-margin-top d-md-none">
-						<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+						<div class="impression__title-wrapper">
+							<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+						</div><!-- /.impression__title-wrapper -->
 						<div class="impression__content content">
 							<p>Embark will bring your customers on-board and facilitate a lasting relationship</p>
 						</div><!-- /.impression__content content -->
@@ -259,7 +261,23 @@
 				</div><!-- /.col-md-6 -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
-	</section><!-- /.key-facts element-paddings -->
+	</section><!-- /.key-facts element-paddings element-margin-top mt-md-0 -->
+
+	<section class="get-in-touch text-center element-paddings">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9 clo-lg-8 col-xl-7 mx-auto">
+					<h2 class="get-in-touch__title">Find out more about Embark here<br> Get in touch</h2><!-- /.get-in-touch__title -->
+					<div class="get-in-touch__content content element-small-margin-top">
+						<p>Send us your details and one of our experts will get back in touch to discuss how Embark can benefit your business</p>
+					</div><!-- /.get-in-touch__content content element-small-margin-top -->
+					<div class="get-in-touch__form element-small-margin-top">
+						<?php echo do_shortcode( '[gravityform id="1" title="false" description="false" ajax="true"]' ); ?>
+					</div><!-- /.get-in-touch__form element-small-margin-top -->
+				</div><!-- /.col-md-9 clo-lg-8 col-xl-7 mx-auto -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section><!-- /.get-in-touch text-center element-paddings -->
 
 </main><!-- /#main.homepage-template -->
 

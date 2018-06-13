@@ -1,31 +1,35 @@
 <nav class="navbar">
     <h2 class="hide">Main navigation</h2>
     <div class="container">
-        <div class="row align-items-center justify-content-between">
+        <div class="row align-items-center justify-content-between w-100 no-gutters">
             <div class="col col-auto">
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="navbar-brand">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/logo__embark--white.svg" alt="<?php echo get_bloginfo('name'); ?>" class="navbar-brand__logo" />
                 </a>
             </div><!-- /.col col-auto -->
-            <div class="col col-auto">
-                <?php
-                    wp_nav_menu([
-                        'menu'            => 'Main Navigation',
-                        'theme_location'  => 'main_navigation',
-                        'container'       => false,
-                        'menu_id'         => false,
-                        'menu_class'      => 'navbar-nav mr-auto',
-                        'depth'           => 2,
-                        'fallback_cb'     => 'bs4navwalker::fallback',
-                        'walker'          => new bs4navwalker()
-                    ]);
-                ?>
+           <div class="col col-auto">
+                <ul id="top-menu" class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about" class="nav-link">About</a>
+                    </li><!-- /.nav-item -->
+                    <li class="nav-item dropdown">
+                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#help" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">First</a>
+                            <a href="#" class="dropdown-item">second</a>
+                            <a href="#" class="dropdown-item">Three</a>
+                        </div>
+                    </li><!-- /.nav-item dropdown -->
+                </ul><!-- /.navbar-nav mr-auto -->
                 <button id="mmenu-triger" class="hamburger hamburger--squeeze" type="button" aria-label="Menu">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
                     </span>
                 </button>
             </div><!-- /.col col-auto -->
-        </div><!-- /.row align-items-center justify-content-between -->
+            <div class="col col-auto d-none d-md-flex">
+                <a href="#" class="embark-button embark-button--small embark-button__full-background embark-button__full-background--primary-color mt-0">Get in touch</a>
+            </div><!-- /.col col-auto d-none d-md-flex -->
+        </div><!-- /.row align-items-center justify-content-between w-100 no-gutters -->
     </div><!-- /.container -->
 </nav><!-- /.navbar -->
