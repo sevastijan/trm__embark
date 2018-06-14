@@ -23,10 +23,33 @@
 					</div><!-- /.intro__content content element-small-margin-top -->
 				</div><!-- /.col-md-6 -->
 				<div class="col-md-6 text-center">
-					<a href="#" class="embark-button embark-button__full-background embark-button__full-background--secondary-color element-margin-top mt-md-0">See Embark in action</a>
+
+					<?php if( have_rows('action_button') ): ?>
+						<?php while( have_rows('action_button') ): the_row();  ?>
+
+							<a href="<?php the_sub_field( 'link' ); ?>" class="embark-button embark-button__full-background embark-button__full-background--secondary-color element-margin-top mt-md-0"><?php the_sub_field( 'label' ); ?></a>
+
+						<?php endwhile; ?>
+					<?php endif; ?>
+
 					<div class="intro__video-wrapper element-small-margin-top">
 						<div class="video-bar text-left"><span></span><span></span><span></span></div><!-- /.video-bar text-left -->
-						<?php the_field('intro_video'); ?>
+
+						<?php $placeholder = get_field( 'intro_video_placeholder' ); ?>
+						<?php if($placeholder): ?>
+
+							<?php $iframe = get_field('intro_video'); ?>
+							<?php preg_match('/src="(.+?)"/', $iframe, $matches); ?>
+							<?php $src = $matches[1]; ?>
+
+							<div class="intro__video-placeholder background-cover lazy" data-src="<?= $placeholder['url']; ?>"><span class="play-button" data-vimeo-src="<?= $src; ?>"></span></div><!-- /.intro__video-placeholder background-cover -->
+
+						<?php else: ?>
+
+							<?php the_field('intro_video'); ?>
+
+						<?php endif; ?>
+
 					</div><!-- /.intro__video-wrapper element-small-margin-top -->
 				</div><!-- /.col-md-6 text-center -->
 			</div><!-- /.row justify-content-between -->
@@ -212,10 +235,10 @@
 
 					<div class="impression element-margin-top d-none d-md-block">
 						<div class="impression__title-wrapper">
-							<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+							<h3 class="impression__title"><?php the_field( 'impression_title' ); ?></h3><!-- /.impression__title -->
 						</div><!-- /.impression__title-wrapper -->
 						<div class="impression__content content">
-							<p>Embark will bring your customers on-board and facilitate a lasting relationship</p>
+							<?php the_field( 'impression_content' ); ?>
 						</div><!-- /.impression__content content -->
 					</div><!-- /.impression element-margin-top d-none d-md-block -->
 
@@ -251,10 +274,10 @@
 
 					<div class="impression element-margin-top d-md-none">
 						<div class="impression__title-wrapper">
-							<h3 class="impression__title">Leave a lasting impression</h3><!-- /.impression__title -->
+							<h3 class="impression__title"><?php the_field( 'impression_title' ); ?></h3><!-- /.impression__title -->
 						</div><!-- /.impression__title-wrapper -->
 						<div class="impression__content content">
-							<p>Embark will bring your customers on-board and facilitate a lasting relationship</p>
+							<?php the_field( 'impression_content' ); ?>
 						</div><!-- /.impression__content content -->
 					</div><!-- /.impression element-margin-top d-md-none -->
 
@@ -267,9 +290,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9 clo-lg-8 col-xl-7 mx-auto">
-					<h2 class="get-in-touch__title">Find out more about Embark here<br> Get in touch</h2><!-- /.get-in-touch__title -->
+					<h2 class="get-in-touch__title"><?php the_field( 'get_in_touch_title' ); ?></h2><!-- /.get-in-touch__title -->
 					<div class="get-in-touch__content content element-small-margin-top">
-						<p>Send us your details and one of our experts will get back in touch to discuss how Embark can benefit your business</p>
+						<?php the_field( 'get_in_touch_content' ); ?>
 					</div><!-- /.get-in-touch__content content element-small-margin-top -->
 					<div class="get-in-touch__form element-small-margin-top">
 						<?php echo do_shortcode( '[gravityform id="1" title="false" description="false" ajax="true"]' ); ?>
@@ -278,6 +301,18 @@
 			</div><!-- /.row -->
 		</div><!-- /.container -->
 	</section><!-- /.get-in-touch text-center element-paddings -->
+
+	<section class="cta text-center element-paddings">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="cta__title"><?php the_field( 'cta_title' ); ?></h2><!-- /.cta__title -->
+					<span class="cta__subtitle d-block"><?php the_field( 'cta_subtitle' ); ?></span>
+					<a href="tel:<?php echo filter_var( get_field( 'cta_phone' ), FILTER_SANITIZE_NUMBER_INT); ?>" class="cta__button"><?php the_field( 'cta_phone' ); ?></a>
+				</div><!-- /.col-12 -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section><!-- /.cta text-center element-paddings -->
 
 </main><!-- /#main.homepage-template -->
 

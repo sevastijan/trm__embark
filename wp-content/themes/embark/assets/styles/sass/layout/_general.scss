@@ -149,7 +149,7 @@
     .embark-button {
         @include primary-font('medium');
         @include fluid-type(20px, 24px, 1.2);
-        padding: 10px;
+        padding: 10px 10px 12.5px 10px;
         display: inline-block;
 
         &__full-background {
