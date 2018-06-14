@@ -21,21 +21,24 @@ class GFExport {
 				return;
 			}
 
-			$forms = RGFormsModel::get_form_meta_by_id( $selected_forms );
-
-			$forms = self::prepare_forms_for_export( $forms );
-
-			$forms['version'] = GFForms::$version;
-
-			$forms_json = json_encode( $forms );
-
-			$filename = 'gravityforms-export-' . date( 'Y-m-d' ) . '.json';
-			header( 'Content-Description: File Transfer' );
-			header( "Content-Disposition: attachment; filename=$filename" );
-			header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ), true );
-			echo $forms_json;
-			die();
+			self::export_forms( $selected_forms );
 		}
+	}
+
+	public static function export_forms( $form_ids ) {
+
+		$forms = GFFormsModel::get_form_meta_by_id( $form_ids );
+		$forms = self::prepare_forms_for_export( $forms );
+
+		$forms['version'] = GFForms::$version;
+		$forms_json       = json_encode( $forms );
+
+		$filename = 'gravityforms-export-' . date( 'Y-m-d' ) . '.json';
+		header( 'Content-Description: File Transfer' );
+		header( "Content-Disposition: attachment; filename=$filename" );
+		header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ), true );
+		echo $forms_json;
+		die();
 	}
 
 	public static function export_page() {
@@ -89,13 +92,22 @@ class GFExport {
 
 	public static function import_json( $forms_json, &$forms = null ) {
 
+		// Remove any whitespace from before and after the JSON.
+		$forms_json = trim( $forms_json );
+
+		// Remove any extra characters from before the JSON.
+		$json_start_position = strpos( $forms_json, '{' );
+		if ( $json_start_position !== 0 ) {
+			$forms_json = substr( $forms_json, $json_start_position );
+		}
+
 		$forms = json_decode( $forms_json, true );
 
 		if ( ! $forms ) {
 			GFCommon::log_debug( __METHOD__ . '(): Import Failed. Invalid form objects.' );
 
 			return 0;
-		} else if ( version_compare( $forms['version'], self::$min_import_version, '<' ) ) {
+		} else if ( ! rgar( $forms, 'version' ) || version_compare( $forms['version'], self::$min_import_version, '<' ) ) {
 			GFCommon::log_debug( __METHOD__ . '(): Import Failed. The JSON version is not compatible with the current Gravity Forms version.' );
 
 			return - 1;
@@ -110,7 +122,7 @@ class GFExport {
 			$form_ids = array();
 		} else {
 			foreach ( $form_ids as $key => $form_id ) {
-				$forms[ $key ]['id'] = $form_id;
+				$forms[ $key ] = GFAPI::get_form( $form_id );
 			}
 			/**
 			 * Fires after forms have been imported.
@@ -258,10 +270,18 @@ class GFExport {
 		}
 
 		if ( isset( $_POST['import_forms'] ) ) {
+
 			check_admin_referer( 'gf_import_forms', 'gf_import_forms_nonce' );
 
-			if ( ! empty( $_FILES['gf_import_file']['tmp_name'] ) ) {
-				$count = self::import_file( $_FILES['gf_import_file']['tmp_name'], $forms );
+			if ( ! empty( $_FILES['gf_import_file']['tmp_name'][0] ) ) {
+
+				// Set initial count to 0.
+				$count = 0;
+
+				// Loop through each uploaded file.
+				foreach ( $_FILES['gf_import_file']['tmp_name'] as $import_file ) {
+					$count += self::import_file( $import_file, $forms );
+				}
 
 				if ( $count == 0 ) {
 					GFCommon::add_error_message( __( 'Forms could not be imported. Please make sure your export file is in the correct format.', 'gravityforms' ) );
@@ -272,7 +292,9 @@ class GFExport {
 					$edit_link = $count == 1 ? "<a href='admin.php?page=gf_edit_forms&id={$forms[0]['id']}'>" . __( 'Edit Form', 'gravityforms' ) . '</a>' : '';
 					GFCommon::add_message( sprintf( __( "Gravity Forms imported %d {$form_text} successfully", 'gravityforms' ), $count ) . ". $edit_link" );
 				}
+
 			}
+
 		}
 
 		self::page_header( __( 'Import Forms', 'gravityforms' ) );
@@ -280,7 +302,7 @@ class GFExport {
 		?>
 
 		<p class="textleft">
-			<?php esc_html_e( 'Select the Gravity Forms export file you would like to import. When you click the import button below, Gravity Forms will import the forms.', 'gravityforms' ); ?>
+			<?php esc_html_e( 'Select the Gravity Forms export files you would like to import. When you click the import button below, Gravity Forms will import the forms.', 'gravityforms' ); ?>
 		</p>
 
 		<div class="hr-divider"></div>
@@ -291,9 +313,9 @@ class GFExport {
 				<tr valign="top">
 
 					<th scope="row">
-						<label for="gf_import_file"><?php esc_html_e( 'Select File', 'gravityforms' ); ?></label> <?php gform_tooltip( 'import_select_file' ) ?>
+						<label for="gf_import_file"><?php esc_html_e( 'Select Files', 'gravityforms' ); ?></label> <?php gform_tooltip( 'import_select_file' ) ?>
 					</th>
-					<td><input type="file" name="gf_import_file" id="gf_import_file" /></td>
+					<td><input type="file" name="gf_import_file[]" id="gf_import_file" multiple /></td>
 				</tr>
 			</table>
 			<br /><br />
@@ -316,6 +338,27 @@ class GFExport {
 		self::page_header( __( 'Export Forms', 'gravityforms' ) );
 
 		?>
+		<script type="text/javascript">
+
+			( function( $, window, undefined ) {
+
+				$( document ).on( 'click keypress', '#gf_export_forms_all', function( e ) {
+					
+					var checked  = e.target.checked,
+					    label    = $( 'label[for="gf_export_forms_all"]' ),
+					    formList = $( '#export_form_list' );
+
+					// Set label.
+					label.find( 'strong' ).html( checked ? label.data( 'deselect' ) : label.data( 'select' ) );
+
+					// Change checkbox status.
+					$( 'input[name]', formList ).prop( 'checked', checked );
+
+				} );
+
+			}( jQuery, window ));
+
+		</script>
 
 		<p class="textleft"><?php esc_html_e( 'Select the forms you would like to export. When you click the download button below, Gravity Forms will create a JSON file for you to save to your computer. Once you\'ve saved the download file, you can use the Import tool to import the forms.', 'gravityforms' ); ?></p>
 		<div class="hr-divider"></div>
@@ -328,6 +371,10 @@ class GFExport {
 					</th>
 					<td>
 						<ul id="export_form_list">
+							<li>
+								<input type="checkbox" id="gf_export_forms_all" />
+								<label for="gf_export_forms_all" data-deselect="<?php esc_attr_e( 'Deselect All', 'gravityforms' ); ?>" data-select="<?php esc_attr_e( 'Select All', 'gravityforms' ); ?>"><strong><?php esc_html_e( 'Select All', 'gravityforms' ); ?></strong></label>
+							</li>
 							<?php
 							$forms = RGFormsModel::get_forms( null, 'title' );
 							foreach ( $forms as $form ) {
@@ -582,10 +629,19 @@ class GFExport {
 		$go_to_next_page = true;
 
 		while ( $go_to_next_page ) {
-			$sql = "SELECT d.field_number as field_id, d.value as value
+
+			if ( version_compare( GFFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
+				$sql = "SELECT d.field_number as field_id, d.value as value
                     FROM {$wpdb->prefix}rg_lead_detail d
                     WHERE d.form_id={$form['id']} AND cast(d.field_number as decimal) IN ({$field_ids})
                     LIMIT {$offset}, {$page_size}";
+			} else {
+				$sql = "SELECT d.meta_key as field_id, d.meta_value as value
+                    FROM {$wpdb->prefix}gf_entry_meta d
+                    WHERE d.form_id={$form['id']} AND d.meta_key IN ({$field_ids})
+                    LIMIT {$offset}, {$page_size}";
+			}
+
 
 			$results = $wpdb->get_results( $sql, ARRAY_A );
 
@@ -669,7 +725,6 @@ class GFExport {
 		$total_entry_count     = GFAPI::count_entries( $form_id, $search_criteria );
 		$remaining_entry_count = $offset == 0 ? $total_entry_count : $total_entry_count - $offset;
 
-		// Adding BOM marker for UTF-8
 		$lines = '';
 
 		// Set the separator
@@ -680,8 +735,19 @@ class GFExport {
 		if ( $offset == 0 ) {
 			GFCommon::log_debug( __METHOD__ . '(): Processing request for form #' . $form_id );
 
+
+			/**
+			 * Allows the BOM character to be excluded from the beginning of entry export files.
+			 * 
+			 * @since 2.1.1.21
+			 *
+			 * @param bool  $include_bom Whether or not to include the BOM characters. Defaults to true.
+			 * @param array $form        The Form Object.
+			 */
+			$include_bom = apply_filters( 'gform_include_bom_export_entries', true, $form );
+
 			//Adding BOM marker for UTF-8
-			$lines = chr( 239 ) . chr( 187 ) . chr( 191 );
+			$lines = $include_bom ? chr( 239 ) . chr( 187 ) . chr( 191 ) : '';
 
 			//writing header
 			$headers = array();
@@ -740,9 +806,13 @@ class GFExport {
 				foreach ( $fields as $field_id ) {
 					switch ( $field_id ) {
 						case 'date_created' :
-							$lead_gmt_time   = mysql2date( 'G', $lead['date_created'] );
-							$lead_local_time = GFCommon::get_local_timestamp( $lead_gmt_time );
-							$value           = date_i18n( 'Y-m-d H:i:s', $lead_local_time, true );
+						case 'payment_date' :
+							$value = $lead[ $field_id ];
+							if ( $value ) {
+								$lead_gmt_time   = mysql2date( 'G', $value );
+								$lead_local_time = GFCommon::get_local_timestamp( $lead_gmt_time );
+								$value           = date_i18n( 'Y-m-d H:i:s', $lead_local_time, true );
+							}
 							break;
 						default :
 							$field = RGFormsModel::get_field( $form, $field_id );
@@ -755,7 +825,7 @@ class GFExport {
 					}
 
 					if ( isset( $field_rows[ $field_id ] ) ) {
-						$list = empty( $value ) ? array() : unserialize( $value );
+						$list = empty( $value ) ? array() : $value;
 
 						foreach ( $list as $row ) {
 							$row_values = array_values( $row );
@@ -775,7 +845,6 @@ class GFExport {
 							$lines .= '""' . $separator;
 						}
 					} else {
-						$value = maybe_unserialize( $value );
 						if ( is_array( $value ) ) {
 							$value = implode( '|', $value );
 						}
@@ -864,6 +933,12 @@ class GFExport {
 		$form = apply_filters( 'gform_export_fields', $form );
 		$form = GFFormsModel::convert_field_objects( $form );
 
+		foreach ( $form['fields'] as $field ) {
+			/* @var GF_Field $field */
+
+			$field->set_context_property( 'use_admin_label', true );
+		}
+
 		return $form;
 	}
 
@@ -879,10 +954,7 @@ class GFExport {
 
 	public static function page_header( $title = '' ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
-
-		// register admin styles
-		wp_register_style( 'gform_admin', GFCommon::get_base_url() . "/css/admin{$min}.css" );
+		// Print admin styles.
 		wp_print_styles( array( 'jquery-ui-styles', 'gform_admin' ) );
 
 		$current_tab  = rgempty( 'view', $_GET ) ? 'export_entry' : rgget( 'view' );

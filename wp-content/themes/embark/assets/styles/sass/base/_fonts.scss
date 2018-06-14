@@ -3,86 +3,31 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 
-	@font-face {
-	    font-family: 'sofia_promedium';
-	    src: url('../fonts/mostardesign_-_sofiapromedium-webfont.woff2') format('woff2'),
-	         url('../fonts/mostardesign_-_sofiapromedium-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-	@font-face {
-	    font-family: 'sofia_proregular';
-	    src: url('../fonts/mostardesign_-_sofiaproregular-webfont.woff2') format('woff2'),
-	         url('../fonts/mostardesign_-_sofiaproregular-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-	@font-face {
-	    font-family: 'sofia_prosemi_bold';
-	    src: url('../fonts/mostardesign_-_sofiaprosemibold-webfont.woff2') format('woff2'),
-	         url('../fonts/mostardesign_-_sofiaprosemibold-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-	@font-face {
-	    font-family: 'mulilight';
-	    src: url('../fonts/muli-light-webfont.woff2') format('woff2'),
-	         url('../fonts/muli-light-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-	@font-face {
-	    font-family: 'muliregular';
-	    src: url('../fonts/muli-regular-webfont.woff2') format('woff2'),
-	         url('../fonts/muli-regular-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-	@font-face {
-	    font-family: 'mulisemibold';
-	    src: url('../fonts/muli-semibold-webfont.woff2') format('woff2'),
-	         url('../fonts/muli-semibold-webfont.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-
 	/* ~~~~~~~~~~ Sofia Pro ~~~~~~~~~~ */
 
-	@mixin primary-font($fontWeight: "regular") {
-	    @if $fontWeight == "regular" {
-	        font-family: 'sofia_proregular', sans-serif;
+	@mixin primary-font($fontWeight: "light") {
+	    @if $fontWeight == "light" {
+	        font-weight: 300;
+	    } @elseif $fontWeight == "regular" {
+	        font-weight: 400;
 	    } @elseif $fontWeight == "medium" {
-	        font-family: 'sofia_promedium', sans-serif;
+	        font-weight: 500;
 	    } @elseif $fontWeight == "semi-bold" {
-	        font-family: 'sofia_prosemi_bold', sans-serif;
+	        font-weight: 600;
 	    }
-	    font-weight: normal;
+	    font-family: sofia-pro, sans-serif;
 	    font-style: normal;
 	}
 
 
 	/* ~~~~~~~~~~ Muli ~~~~~~~~~~ */
 
-	@mixin secondary-font($fontWeight: "regular") {
+	@mixin secondary-font($fontWeight: "light") {
 	    @if $fontWeight == "light" {
-	        font-family: 'mulilight', sans-serif;
+	        font-weight: 300;
 	    } @elseif $fontWeight == "regular" {
-	        font-family: 'muliregular', sans-serif;
-	    } @elseif $fontWeight == "semi-bold" {
-	        font-family: 'mulisemibold', sans-serif;
+	        font-weight: 400;
 	    }
-	    font-weight: normal;
+	    font-family: muli, sans-serif;
 	    font-style: normal;
 	}

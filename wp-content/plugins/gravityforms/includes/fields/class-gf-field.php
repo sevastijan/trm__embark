@@ -28,9 +28,21 @@ class GF_Field extends stdClass implements ArrayAccess {
 	private $_is_entry_detail = null;
 
 	/**
-	 * @var array $_modifiers An array of modifiers specified on the field or all_fields merge tag being processed.
+	 * An array of properties used to help define and determine the context for the field.
+	 * As this is private, it won't be available in any json_encode() output and consequently not saved in the Form array.
+	 *
+	 * @since 2.3
+	 *
+	 * @private
+	 *
+	 * @var array
 	 */
-	private $_modifiers = array();
+	private $_context_properties = array();
+
+	/**
+	 * @var array $_merge_tag_modifiers An array of modifiers specified on the field or all_fields merge tag being processed.
+	 */
+	private $_merge_tag_modifiers = array();
 
 	public function __construct( $data = array() ) {
 		if ( empty( $data ) ) {
@@ -103,12 +115,33 @@ class GF_Field extends stdClass implements ArrayAccess {
 	}
 
 	public function __set( $key, $value ) {
-		$this->$key = $value;
+		switch( $key ) {
+			case '_context_properties' :
+				_doing_it_wrong( '$field->_context_properties', 'Use $field->get_context_property() instead.', '2.3' );
+				break;
+			case 'adminOnly':
+				// intercept 3rd parties trying to set the adminOnly property and convert to visibility property
+				$this->visibility = $value ? 'administrative' : 'visible';
+				break;
+			default:
+				$this->$key = $value;
+		}
 	}
 
 	public function &__get( $key ) {
-		if ( ! isset( $this->$key ) ) {
-			$this->$key = '';
+
+		switch( $key ) {
+			case '_context_properties' :
+				_doing_it_wrong( '$field->_context_properties', 'Use $field->get_context_property() instead.', '2.3' );
+				return false;
+			case 'adminOnly' :
+				// intercept 3rd parties trying to get the adminOnly property and fetch visibility property instead
+				$value = $this->visibility == 'administrative'; // set and return variable to avoid notice
+				return $value;
+			default:
+				if ( ! isset( $this->$key ) ) {
+					$this->$key = '';
+				}
 		}
 
 		return $this->$key;
@@ -116,6 +149,14 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 	public function __unset( $key ) {
 		unset( $this->$key );
+	}
+
+	public function set_context_property( $property_key, $value ) {
+		$this->_context_properties[ $property_key ] = $value;
+	}
+
+	public function get_context_property( $property_key ) {
+		return isset( $this->_context_properties[ $property_key ] ) ? $this->_context_properties[ $property_key ] : null;
 	}
 
 
@@ -187,9 +228,9 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Returns the field inner markup.
 	 *
-	 * @param array $form The Form Object currently being processed.
+	 * @param array        $form  The Form Object currently being processed.
 	 * @param string|array $value The field value. From default/dynamic population, $_POST, or a resumed incomplete submission.
-	 * @param null|array $entry Null or the Entry Object currently being edited.
+	 * @param null|array   $entry Null or the Entry Object currently being edited.
 	 *
 	 * @return string
 	 */
@@ -202,9 +243,9 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 *
 	 * The {FIELD} placeholder will be replaced in GFFormDisplay::get_field_content with the markup returned by GF_Field::get_field_input().
 	 *
-	 * @param string|array $value The field value. From default/dynamic population, $_POST, or a resumed incomplete submission.
-	 * @param bool $force_frontend_label Should the frontend label be displayed in the admin even if an admin label is configured.
-	 * @param array $form The Form Object currently being processed.
+	 * @param string|array $value                The field value. From default/dynamic population, $_POST, or a resumed incomplete submission.
+	 * @param bool         $force_frontend_label Should the frontend label be displayed in the admin even if an admin label is configured.
+	 * @param array        $form                 The Form Object currently being processed.
 	 *
 	 * @return string
 	 */
@@ -237,7 +278,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 		return $field_content;
 	}
 
-	public function get_field_label_class(){
+	public function get_field_label_class() {
 		return 'gfield_label';
 	}
 
@@ -315,7 +356,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 * Return the validation message (string) by setting $this->validation_message.
 	 *
 	 * @param string|array $value The field value from get_value_submission().
-	 * @param array $form The Form Object currently being processed.
+	 * @param array        $form  The Form Object currently being processed.
 	 */
 	public function validate( $value, $form ) {
 		//
@@ -324,7 +365,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Retrieve the field value on submission.
 	 *
-	 * @param array $field_values The dynamic population parameter names with their corresponding values to be populated.
+	 * @param array     $field_values             The dynamic population parameter names with their corresponding values to be populated.
 	 * @param bool|true $get_from_post_global_var Whether to get the value from the $_POST array as opposed to $field_values.
 	 *
 	 * @return array|string
@@ -348,9 +389,9 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Retrieve the input value on submission.
 	 *
-	 * @param string $standard_name The input name used when accessing the $_POST.
-	 * @param string $custom_name The dynamic population parameter name.
-	 * @param array $field_values The dynamic population parameter names with their corresponding values to be populated.
+	 * @param string    $standard_name            The input name used when accessing the $_POST.
+	 * @param string    $custom_name              The dynamic population parameter name.
+	 * @param array     $field_values             The dynamic population parameter names with their corresponding values to be populated.
 	 * @param bool|true $get_from_post_global_var Whether to get the value from the $_POST array as opposed to $field_values.
 	 *
 	 * @return array|string
@@ -384,11 +425,11 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Sanitize and format the value before it is saved to the Entry Object.
 	 *
-	 * @param string $value The value to be saved.
-	 * @param array $form The Form Object currently being processed.
+	 * @param string $value      The value to be saved.
+	 * @param array  $form       The Form Object currently being processed.
 	 * @param string $input_name The input name used when accessing the $_POST.
-	 * @param int $lead_id The ID of the Entry currently being processed.
-	 * @param array $lead The Entry Object currently being processed.
+	 * @param int    $lead_id    The ID of the Entry currently being processed.
+	 * @param array  $lead       The Entry Object currently being processed.
 	 *
 	 * @return array|string The safe value.
 	 */
@@ -406,25 +447,29 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 	/**
 	 * Format the entry value for when the field/input merge tag is processed. Not called for the {all_fields} merge tag.
+	 *
 	 * Return a value that is safe for the context specified by $format.
 	 *
-	 * @param string|array $value The field value. Depending on the location the merge tag is being used the following functions may have already been applied to the value: esc_html, nl2br, and urlencode.
-	 * @param string $input_id The field or input ID from the merge tag currently being processed.
-	 * @param array $entry The Entry Object currently being processed.
-	 * @param array $form The Form Object currently being processed.
-	 * @param string $modifier The merge tag modifier. e.g. value
-	 * @param string|array $raw_value The raw field value from before any formatting was applied to $value.
-	 * @param bool $url_encode Indicates if the urlencode function may have been applied to the $value.
-	 * @param bool $esc_html Indicates if the esc_html function may have been applied to the $value.
-	 * @param string $format The format requested for the location the merge is being used. Possible values: html, text or url.
-	 * @param bool $nl2br Indicates if the nl2br function may have been applied to the $value.
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param string|array $value      The field value. Depending on the location the merge tag is being used the following functions may have already been applied to the value: esc_html, nl2br, and urlencode.
+	 * @param string       $input_id   The field or input ID from the merge tag currently being processed.
+	 * @param array        $entry      The Entry Object currently being processed.
+	 * @param array        $form       The Form Object currently being processed.
+	 * @param string       $modifier   The merge tag modifier. e.g. value
+	 * @param string|array $raw_value  The raw field value from before any formatting was applied to $value.
+	 * @param bool         $url_encode Indicates if the urlencode function may have been applied to the $value.
+	 * @param bool         $esc_html   Indicates if the esc_html function may have been applied to the $value.
+	 * @param string       $format     The format requested for the location the merge is being used. Possible values: html, text or url.
+	 * @param bool         $nl2br      Indicates if the nl2br function may have been applied to the $value.
 	 *
 	 * @return string
 	 */
 	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
 
 		if ( $format === 'html' ) {
-			$form_id = absint( $form['id'] );
+			$form_id = isset( $form['id'] ) ? absint( $form['id'] ) : null;
 			$allowable_tags = $this->get_allowable_tags( $form_id );
 
 			if ( $allowable_tags === false ) {
@@ -464,13 +509,14 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 	/**
 	 * Format the entry value for display on the entries list page.
+	 *
 	 * Return a value that's safe to display on the page.
 	 *
-	 * @param string|array $value The field value.
-	 * @param array $entry The Entry Object currently being processed.
-	 * @param string $field_id The field or input ID currently being processed.
-	 * @param array $columns The properties for the columns being displayed on the entry list page.
-	 * @param array $form The Form Object currently being processed.
+	 * @param string|array $value    The field value.
+	 * @param array        $entry    The Entry Object currently being processed.
+	 * @param string       $field_id The field or input ID currently being processed.
+	 * @param array        $columns  The properties for the columns being displayed on the entry list page.
+	 * @param array        $form     The Form Object currently being processed.
 	 *
 	 * @return string
 	 */
@@ -490,13 +536,14 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 	/**
 	 * Format the entry value for display on the entry detail page and for the {all_fields} merge tag.
+	 *
 	 * Return a value that's safe to display for the context of the given $format.
 	 *
-	 * @param string|array $value The field value.
-	 * @param string $currency The entry currency code.
-	 * @param bool|false $use_text When processing choice based fields should the choice text be returned instead of the value.
-	 * @param string $format The format requested for the location the merge is being used. Possible values: html, text or url.
-	 * @param string $media The location where the value will be displayed. Possible values: screen or email.
+	 * @param string|array $value    The field value.
+	 * @param string       $currency The entry currency code.
+	 * @param bool|false   $use_text When processing choice based fields should the choice text be returned instead of the value.
+	 * @param string       $format   The format requested for the location the merge is being used. Possible values: html, text or url.
+	 * @param string       $media    The location where the value will be displayed. Possible values: screen or email.
 	 *
 	 * @return string
 	 */
@@ -529,12 +576,14 @@ class GF_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Format the entry value before it is used in entry exports and by framework add-ons using GFAddOn::get_field_value().
 	 *
-	 * @param array $entry The entry currently being processed.
-	 * @param string $input_id The field or input ID.
-	 * @param bool|false $use_text When processing choice based fields should the choice text be returned instead of the value.
-	 * @param bool|false $is_csv Is the value going to be used in the .csv entries export?
+	 * For CSV export return a string or array.
 	 *
-	 * @return string
+	 * @param array      $entry    The entry currently being processed.
+	 * @param string     $input_id The field or input ID.
+	 * @param bool|false $use_text When processing choice based fields should the choice text be returned instead of the value.
+	 * @param bool|false $is_csv   Is the value going to be used in the .csv entries export?
+	 *
+	 * @return string|array
 	 */
 	public function get_value_export( $entry, $input_id = '', $use_text = false, $is_csv = false ) {
 		if ( empty( $input_id ) ) {
@@ -592,7 +641,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		$placeholder_value = GFCommon::replace_variables_prepopulate( $this->placeholder );
 
-		return ! empty( $placeholder_value ) ? sprintf( "placeholder='%s'", esc_attr( $placeholder_value ) ) : '';
+		return ! rgblank( $placeholder_value ) ? sprintf( "placeholder='%s'", esc_attr( $placeholder_value ) ) : '';
 	}
 
 	/**
@@ -606,7 +655,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		$placeholder_value = $this->get_input_placeholder_value( $input );
 
-		return ! empty( $placeholder_value ) ? sprintf( "placeholder='%s'", esc_attr( $placeholder_value ) ) : '';
+		return ! rgblank( $placeholder_value ) ? sprintf( "placeholder='%s'", esc_attr( $placeholder_value ) ) : '';
 	}
 
 	/**
@@ -620,7 +669,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		$placeholder = rgar( $input, 'placeholder' );
 
-		return empty( $placeholder ) ? '' : GFCommon::replace_variables_prepopulate( $placeholder );
+		return rgblank( $placeholder ) ? '' : GFCommon::replace_variables_prepopulate( $placeholder );
 	}
 
 
@@ -690,6 +739,11 @@ class GF_Field extends stdClass implements ArrayAccess {
 	}
 
 
+	public function is_administrative() {
+		return $this->visibility == 'administrative';
+	}
+
+
 	// # OTHER HELPERS --------------------------------------------------------------------------------------------------
 
 	/**
@@ -699,7 +753,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 */
 	public function set_modifiers( $modifiers ) {
 
-		$this->_modifiers = $modifiers;
+		$this->_merge_tag_modifiers = $modifiers;
 	}
 
 	/**
@@ -709,7 +763,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 */
 	public function get_modifiers() {
 
-		return $this->_modifiers;
+		return $this->_merge_tag_modifiers;
 	}
 
 	/**
@@ -784,7 +838,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 		 */
 		$duplicate_field_link = apply_filters( 'gform_duplicate_field_link', $duplicate_field_link );
 
-		$delete_field_link = "<a class='field_delete_icon' id='gfield_delete_{$this->id}' title='" . esc_attr__( 'click to delete this field', 'gravityforms' ) . "' href='#' onclick='StartDeleteField(this); return false;' onkeypress='StartDeleteField(this); return false;'><i class='fa fa-times fa-lg'></i></a>";
+		$delete_field_link = "<a class='field_delete_icon' id='gfield_delete_{$this->id}' title='" . esc_attr__( 'click to delete this field', 'gravityforms' ) . "' href='#' onclick='DeleteField(this); return false;' onkeypress='DeleteField(this); return false;'><i class='fa fa-times fa-lg'></i></a>";
 
 		/**
 		 * This filter allows for modification of a form field delete link. This will change the link for all fields
@@ -798,7 +852,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 		$is_entry_detail = $this->is_entry_detail();
 		$is_admin        = $is_form_editor || $is_entry_detail;
 
-		$admin_buttons = $is_admin ? "<div class='gfield_admin_icons'><div class='gfield_admin_header_title'>{$field_type_title} : " . esc_html__( 'Field ID', 'gravityforms' ) . " {$this->id}</div>" . $delete_field_link . $duplicate_field_link . "<a class='field_edit_icon edit_icon_collapsed' title='" . esc_attr__( 'click to expand and edit the options for this field', 'gravityforms' ) . "'><i class='fa fa-caret-down fa-lg'></i></a></div>" : '';
+		$admin_buttons = $is_admin ? "<div class='gfield_admin_icons'><div class='gfield_admin_header_title'>{$field_type_title} : " . esc_html__( 'Field ID', 'gravityforms' ) . " {$this->id}</div>" . $delete_field_link . $duplicate_field_link . "<a href='javascript:void(0);' class='field_edit_icon edit_icon_collapsed' aria-expanded='false' title='" . esc_attr__( 'click to expand and edit the options for this field', 'gravityforms' ) . "'><i class='fa fa-caret-down fa-lg'></i></a></div>" : '';
 
 		return $admin_buttons;
 	}
@@ -852,7 +906,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 * Returns the markup for the field description.
 	 *
 	 * @param string $description The field description.
-	 * @param string $css_class The css class to be assigned to the description container.
+	 * @param string $css_class   The css class to be assigned to the description container.
 	 *
 	 * @return string
 	 */
@@ -941,8 +995,8 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 *
 	 * This base method will only strip HTML tags if the field or the gform_allowable_tags filter allows HTML.
 	 *
-	 * @param string $value The field value to be processed.
-	 * @param int $form_id The ID of the form currently being processed.
+	 * @param string $value   The field value to be processed.
+	 * @param int    $form_id The ID of the form currently being processed.
 	 *
 	 * @return string
 	 */
@@ -1036,8 +1090,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 			$this->inputName = wp_strip_all_tags( $this->inputName );
 		}
 
-		$this->adminOnly = (bool) $this->adminOnly;
-
+		$this->visibility = wp_strip_all_tags( $this->visibility );
 		$this->noDuplicates = (bool) $this->noDuplicates;
 
 		if ( $this->defaultValue ) {
@@ -1139,7 +1192,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 *
 	 * @param $html
 	 * @param string $allowed_html
-	 * @param array $allowed_protocols
+	 * @param array  $allowed_protocols
 	 *
 	 * @return string
 	 */
@@ -1156,7 +1209,7 @@ class GF_Field extends stdClass implements ArrayAccess {
 	 *
 	 * @param null|int $form_id If not specified the form_id field property is used.
 	 *
-	 * @return mixed|void TRUE, FALSE or a string of tags.
+	 * @return bool|string TRUE, FALSE or a string of tags.
 	 */
 	public function get_allowable_tags( $form_id = null ) {
 		if ( empty( $form_id ) ) {
@@ -1167,16 +1220,38 @@ class GF_Field extends stdClass implements ArrayAccess {
 
 		/**
 		 * Allows the list of tags allowed in the field value to be modified.
+		 *
 		 * Return FALSE to disallow HTML tags.
 		 * Return TRUE to allow all HTML tags allowed by wp_kses_post().
 		 * Return a string of HTML tags allowed. e.g. '<p><a><strong><em>'
 		 *
-		 * @param bool $allow_html
+		 * @since Unknown
+		 *
+		 * @param bool     $allow_html
 		 * @param GF_Field $this
-		 * @param int $form_id
+		 * @param int      $form_id
 		 */
 		$allowable_tags = apply_filters( 'gform_allowable_tags', $allow_html, $this, $form_id );
 		$allowable_tags = apply_filters( "gform_allowable_tags_{$form_id}", $allowable_tags, $this, $form_id );
+
 		return $allowable_tags;
+	}
+
+	/**
+	 * Actions to be performed after the field has been converted to an object.
+	 *
+	 * @since  2.1.2.7
+	 * @access public
+	 *
+	 * @uses    GF_Field::failed_validation()
+	 * @uses    GF_Field::validation_message()
+	 * @used-by GFFormsModel::convert_field_objects()
+	 *
+	 * @return void
+	 */
+	public function post_convert_field() {
+		// Fix an issue where fields can show up as invalid in the form editor if the form was updated using the form object returned after a validation failure.
+		unset( $this->failed_validation );
+		unset( $this->validation_message );
 	}
 }
