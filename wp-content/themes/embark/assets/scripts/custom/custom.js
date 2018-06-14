@@ -29,6 +29,7 @@
                     "pagedim-black",
                     "theme-dark"
                 ],
+                "slidingSubmenus": false,
                 "offCanvas": {
                     "position": "right"
                 },
@@ -85,42 +86,6 @@
                     autoplay : 1
                 }
             });
-
-
-            /* ~~~~~~~~~~ OWL Init ~~~~~~~~~~ */
-
-                /* ~~~~~ Slider Name ~~~~~ */
-
-                // $(function() {
-                //     var owlsampleSlider = $('#sample-slider');
-
-                //     owlsampleSlider.owlCarousel({
-                //         items: 3,
-                //         dots: false,
-                //         loop: true,
-                //         responsive : {
-                //             0 : {
-                //                 margin: 20
-                //             },
-                //             1200 : {
-                //                 items: 4,
-                //                 margin: 30
-                //             }
-                //         }
-                //     });
-
-                //     $('#prev-sample-slider').click(function(e) {
-                //         e.preventDefault();
-
-                //         owlsampleSlider.trigger('prev.owl.carousel');
-                //     });
-
-                //     $('#next-sample-slider').click(function(e) {
-                //         e.preventDefault();
-
-                //         owlsampleSlider.trigger('next.owl.carousel');
-                //     });
-                // });
 
 
         /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -243,33 +208,9 @@
             });
 
 
-            /* ~~~~~~~~~~ Input And Textarea Functions ~~~~~~~~~~ */
-
-            $('.ginput_container > input, .ginput_container > textarea').each(function() {
-                if( $(this).val() ) {
-                    $(this).parent().parent().addClass('gfield--active');
-                    $(this).parent().addClass('ginput_container-active');
-                }
-            });
-
-            $('.ginput_container > input').each(function() {
-                $(this).parent().addClass('ginput_container-inactive');
-            });
-
-            $('.ginput_container > input').focus(function () {
-                $(this).parent().parent().addClass('gfield--active');
-                $(this).parent().addClass('ginput_container-active');
-            }).blur(function () {
-                if ($(this).val() === '') {
-                    $(this).parent().parent().removeClass('gfield--active');
-                    $(this).parent().removeClass('ginput_container-active');
-                }
-            });
-
-
             /* ~~~~~~~~~~ Play Iframe Video ~~~~~~~~~~ */
 
-            $('.play-button').click(function(){
+            $('.video__play-button').click(function(){
                 $(this).parent().addClass('no-after');
                 $(this).parent().html('<iframe src="'+$(this).data('vimeo-src')+'?portrait=0&title=0&badge=0&byline=0&autoplay=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
             });

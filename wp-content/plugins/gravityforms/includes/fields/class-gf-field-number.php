@@ -44,7 +44,6 @@ class GF_Field_Number extends GF_Field {
 		$value = $this->get_input_value_submission( 'input_' . $this->id, $this->inputName, $field_values, $get_from_post_global_var );
 		$value = trim( $value );
 		if ( $this->numberFormat == 'currency' ) {
-			require_once( GFCommon::get_base_path() . '/currency.php' );
 			$currency = new RGCurrency( GFCommon::get_currency() );
 			$value    = $currency->to_number( $value );
 		} elseif ( $this->numberFormat == 'decimal_comma' ) {
@@ -58,15 +57,14 @@ class GF_Field_Number extends GF_Field {
 
 	public function validate( $value, $form ) {
 
-		// the POST value has already been converted from currency or decimal_comma to decimal_dot and then cleaned in get_field_value()
+		// The POST value has already been converted from currency or decimal_comma to decimal_dot and then cleaned in get_field_value().
+		$value = GFCommon::maybe_add_leading_zero( $value );
 
-		$value     = GFCommon::maybe_add_leading_zero( $value );
-		$raw_value = $_POST[ 'input_' . $this->id ]; //Raw value will be tested against the is_numeric() function to make sure it is in the right format.
+		// Raw value will be tested against the is_numeric() function to make sure it is in the right format.
+		$raw_value = GFCommon::maybe_add_leading_zero( rgpost( 'input_' . $this->id ) );
 
 		$requires_valid_number = ! rgblank( $raw_value ) && ! $this->has_calculation();
-
-		$raw_value       = GFCommon::maybe_add_leading_zero( $raw_value );
-		$is_valid_number = $this->validate_range( $value ) && GFCommon::is_numeric( $raw_value, $this->numberFormat );
+		$is_valid_number       = $this->validate_range( $value ) && GFCommon::is_numeric( $raw_value, $this->numberFormat );
 
 		if ( $requires_valid_number && ! $is_valid_number ) {
 			$this->failed_validation  = true;
@@ -86,7 +84,7 @@ class GF_Field_Number extends GF_Field {
 	/**
 	 * Validates the range of the number according to the field settings.
 	 *
-	 * @param array $value A decimal_dot formatted string
+	 * @param string $value A decimal_dot formatted string
 	 *
 	 * @return true|false True on valid or false on invalid
 	 */
@@ -96,8 +94,11 @@ class GF_Field_Number extends GF_Field {
 			return false;
 		}
 
-		if ( ( is_numeric( $this->rangeMin ) && $value < $this->rangeMin ) ||
-		     ( is_numeric( $this->rangeMax ) && $value > $this->rangeMax )
+		$numeric_min = $this->numberFormat == 'decimal_comma' ? GFCommon::clean_number( $this->rangeMin, 'decimal_comma' ) : $this->rangeMin;
+		$numeric_max = $this->numberFormat == 'decimal_comma' ? GFCommon::clean_number( $this->rangeMax, 'decimal_comma' ) : $this->rangeMax;
+
+		if ( ( is_numeric( $numeric_min ) && $value < $numeric_min ) ||
+		     ( is_numeric( $numeric_max ) && $value > $numeric_max )
 		) {
 			return false;
 		} else {
@@ -108,13 +109,22 @@ class GF_Field_Number extends GF_Field {
 	public function get_range_message() {
 		$min     = $this->rangeMin;
 		$max     = $this->rangeMax;
+
+		$numeric_min = $min;
+		$numeric_max = $max;
+
+		if( $this->numberFormat == 'decimal_comma' ){
+			$numeric_min = empty( $min ) ? '' : GFCommon::clean_number( $min, 'decimal_comma', '');
+			$numeric_max = empty( $max ) ? '' : GFCommon::clean_number( $max, 'decimal_comma', '');
+		}
+
 		$message = '';
 
-		if ( is_numeric( $min ) && is_numeric( $max ) ) {
+		if ( is_numeric( $numeric_min ) && is_numeric( $numeric_max ) ) {
 			$message = sprintf( esc_html__( 'Please enter a value between %s and %s.', 'gravityforms' ), "<strong>$min</strong>", "<strong>$max</strong>" );
-		} elseif ( is_numeric( $min ) ) {
+		} elseif ( is_numeric( $numeric_min ) ) {
 			$message = sprintf( esc_html__( 'Please enter a value greater than or equal to %s.', 'gravityforms' ), "<strong>$min</strong>" );
-		} elseif ( is_numeric( $max ) ) {
+		} elseif ( is_numeric( $numeric_max ) ) {
 			$message = sprintf( esc_html__( 'Please enter a value less than or equal to %s.', 'gravityforms' ), "<strong>$max</strong>" );
 		} elseif ( $this->failed_validation ) {
 			$message = esc_html__( 'Please enter a valid number', 'gravityforms' );
@@ -155,7 +165,7 @@ class GF_Field_Number extends GF_Field {
 					$instruction = "<div class='instruction $validation_class'>" . $message . '</div>';
 				}
 			}
-		} elseif ( RG_CURRENT_VIEW == 'entry' ) {
+		} elseif ( rgget('view') == 'entry' ) {
 			$value = GFCommon::format_number( $value, $this->numberFormat, rgar( $entry, 'currency' ) );
 		}
 
@@ -190,14 +200,42 @@ class GF_Field_Number extends GF_Field {
 		return GFCommon::format_number( $value, $this->numberFormat, rgar( $entry, 'currency' ), $include_thousands_sep );
 	}
 
-
 	public function get_value_entry_detail( $value, $currency = '', $use_text = false, $format = 'html', $media = 'screen' ) {
 		$include_thousands_sep = apply_filters( 'gform_include_thousands_sep_pre_format_number', $use_text, $this );
 
 		return GFCommon::format_number( $value, $this->numberFormat, $currency, $include_thousands_sep );
 	}
 
+	/**
+	 * Gets merge tag values.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses GFCommon::format_number()
+	 *
+	 * @param array|string $value      The value of the input.
+	 * @param string       $input_id   The input ID to use.
+	 * @param array        $entry      The Entry Object.
+	 * @param array        $form       The Form Object
+	 * @param string       $modifier   The modifier passed.
+	 * @param array|string $raw_value  The raw value of the input.
+	 * @param bool         $url_encode If the result should be URL encoded.
+	 * @param bool         $esc_html   If the HTML should be escaped.
+	 * @param string       $format     The format that the value should be.
+	 * @param bool         $nl2br      If the nl2br function should be used.
+	 *
+	 * @return string The processed merge tag.
+	 */
 	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
+		/**
+		 * Filters is the thousands separator should be used when displaying the a number field result.
+		 *
+		 * @since Unknown
+		 *
+		 * @param bool   $modifier != 'value' If the modifier passed in the merge tag is not 'value', false. Otherwise, true.
+		 * @param object GF_Field_Number      An instance of this class.
+		 */
 		$include_thousands_sep = apply_filters( 'gform_include_thousands_sep_pre_format_number', $modifier != 'value', $this );
 		$formatted_value       = GFCommon::format_number( $value, $this->numberFormat, rgar( $entry, 'currency' ), $include_thousands_sep );
 
@@ -224,17 +262,16 @@ class GF_Field_Number extends GF_Field {
 		parent::sanitize_settings();
 		$this->enableCalculation = (bool) $this->enableCalculation;
 
-		if ( $this->numberFormat == 'currency' ) {
-			require_once( GFCommon::get_base_path() . '/currency.php' );
-			$currency = new RGCurrency( GFCommon::get_currency() );
-			$this->rangeMin    = $currency->to_number( $this->rangeMin );
-			$this->rangeMax    = $currency->to_number( $this->rangeMax );
-		} elseif ( $this->numberFormat == 'decimal_comma' ) {
-			$this->rangeMin = GFCommon::clean_number( $this->rangeMin, 'decimal_comma' );
-			$this->rangeMax = GFCommon::clean_number( $this->rangeMax, 'decimal_comma' );
-		} elseif ( $this->numberFormat == 'decimal_dot' ) {
-			$this->rangeMin = GFCommon::clean_number( $this->rangeMin, 'decimal_dot' );
-			$this->rangeMin = GFCommon::clean_number( $this->rangeMin, 'decimal_dot' );
+		if ( ! in_array( $this->numberFormat, array( 'currency', 'decimal_comma', 'decimal_dot' ) ) ) {
+			$this->numberFormat = GFCommon::is_currency_decimal_dot() ? 'decimal_dot' : 'decimal_comma';
+		}
+
+		$this->rangeMin = $this->clean_number( $this->rangeMin );
+		$this->rangeMax = $this->clean_number( $this->rangeMax );
+
+		if ( $this->numberFormat == 'decimal_comma' ) {
+			$this->rangeMin = GFCommon::format_number( $this->rangeMin, 'decimal_comma' );
+			$this->rangeMax = GFCommon::format_number( $this->rangeMax, 'decimal_comma' );
 		}
 	}
 

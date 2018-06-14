@@ -3,5 +3,145 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 	.main-footer {
+		background: #333e48;
 
+		&__title {
+			@include secondary-font('regular');
+			@include fluid-type(16px, 18px);
+			color: #fff;
+		}
+
+		&__address,
+		&__nav,
+		&__description {
+			color: rgba(#fff, .7);
+			font-size: 14px;
+			line-height: 1.75;
+
+			.nav-item {
+				margin-top: 10px;
+
+				&:first-child {
+					margin-top: 0;
+				}
+
+				.nav-link {
+					padding: 0;
+
+					&:hover,
+					&:focus {
+						color: $primary-color;
+					}
+				}
+			}
+		}
+
+		&__form {
+			> input {
+				width: 70%;
+				height: 55px;
+				float: left;
+				font-size: 14px;
+				color: rgba(255,255,255,0.7);
+				border: 2px solid rgba(255,255,255,0.5);
+				background: transparent;
+				padding: 0 15px;
+				border-radius: 4px 0 0 4px;
+				transition: color 00.15s,border-color 0.3s;
+
+				@include placeholder {
+					font-size: 14px;
+					color: rgba(255,255,255,0.7);
+					opacity: 1;
+				}
+
+				&:focus {
+					color: rgba(255,255,255,1);
+					border-color: rgba(255,255,255,1);
+				}
+			}
+
+			button {
+				@include secondary-font('semi-bold');
+				width: 30%;
+				height: 55px;
+				background: transparent;
+				margin-left: -2px;
+				border-left-color: transparent;
+				border-radius: 0 4px 4px 0;
+				font-size: 14px;
+				color: #fff;
+				border: 2px solid rgba(255,255,255,0.5);
+				transition: color 00.15s,border-color 0.3s;
+
+				i {
+					margin-top: -5px;
+					margin-right: 5px;
+				}
+
+				&:hover,
+				&:focus {
+					border-color: rgba(255,255,255,1);
+				}
+			}
+		}
+
+		.second-stage {
+			@include element-spacing(.4);
+			background: #586169;
+			border-top: 1px solid rgba(255,255,255,0.2);
+
+			&__description {
+				color: rgba(#fff, .7);
+				font-size: 14px;
+				line-height: 1.4;
+
+				@include media-breakpoint-up(md) {
+					line-height: 1.75;
+				}
+			}
+
+			.menu-footer-menu-container {
+				@extend .element-small-margin-top;
+
+				.menu {
+					list-style-type: none;
+
+					@include media-breakpoint-up(md) {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+
+					.menu-item {
+						&:after {
+							@include media-breakpoint-up(md) {
+								content: '|';
+								color: rgba(#fff, .7);
+								font-size: 14px;
+								line-height: 1.75;
+								padding: 0 5px;
+							}
+						}
+
+						&:last-child {
+							&:after {
+								display: none;
+							}
+						}
+
+						a {
+							color: rgba(#fff, .7);
+							font-size: 14px;
+							line-height: 1.75;
+
+							&:hover,
+							&:focus {
+								color: $primary-color;
+							}
+						}
+					}
+				}
+			}
+		}
 	}

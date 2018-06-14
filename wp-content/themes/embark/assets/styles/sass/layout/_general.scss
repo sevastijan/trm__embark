@@ -152,6 +152,11 @@
         padding: 10px 10px 12.5px 10px;
         display: inline-block;
 
+        &--small {
+            @include fluid-type(14px, 16px, 1);
+            padding: 7.5px 20px;
+        }
+
         &__full-background {
             border-radius: 6px;
 
@@ -177,9 +182,16 @@
                 }
             }
         }
+    }
 
-        &--small {
-            @include fluid-type(14px, 16px, 1);
-            padding: 7.5px 20px;
+
+    /* ~~~~~~~~~~ Error ~~~~~~~~~~ */
+
+    .error-404 {
+        @include element-spacing(3);
+        background: $primary-color;
+
+        &__content {
+            color: rgba(#fff, .8);
         }
     }

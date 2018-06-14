@@ -70,7 +70,7 @@ class GF_Field_Textarea extends GF_Field {
 		}
 
 		//see if the field is set to use the rich text editor
-		if ( $this->useRichTextEditor && ! $is_admin ) {
+		if ( ! $is_admin && $this->is_rich_edit_enabled() ) {
 			//placeholders cannot be used with the rte; message displayed in admin when this occurs
 			//field cannot be used in conditional logic by another field; message displayed in admin and field removed from conditional logic drop down
 			$tabindex = GFCommon::$tab_index > 0 ? GFCommon::$tab_index ++ : '';
@@ -97,6 +97,14 @@ class GF_Field_Textarea extends GF_Field {
 				'tabindex' 		=> $tabindex,
 				'media_buttons' => false,
 				'quicktags'     => false,
+				'tinymce'		=> array( 'init_instance_callback' =>  "function (editor) {
+												editor.on( 'keyup paste mouseover', function (e) {
+													var content = editor.getContent( { format: 'text' } ).trim();													
+													var textarea = jQuery( '#' + editor.id ); 
+													textarea.val( content ).trigger( 'keyup' ).trigger( 'paste' ).trigger( 'mouseover' );													
+												
+													
+												});}" ),
 			), $this, $form, $entry );
 
 			$editor_settings = apply_filters( sprintf( 'gform_rich_text_editor_options_%d', $form['id'] ),               $editor_settings, $this, $form, $entry );
@@ -131,6 +139,26 @@ class GF_Field_Textarea extends GF_Field {
 		return sprintf( "<div class='ginput_container ginput_container_textarea'>%s</div>", $input );
 	}
 
+	public function validate( $value, $form ) {
+		if ( ! is_numeric( $this->maxLength ) ) {
+			return;
+		}
+
+		if ( $this->useRichTextEditor ) {
+			$value = wp_specialchars_decode( $value );
+		}
+
+		// Clean the string of characters not counted by the textareaCounter plugin.
+		$value = strip_tags( $value );
+		$value = str_replace( "\r", '', $value );
+		$value = trim( $value );
+
+		if ( GFCommon::safe_strlen( $value ) > $this->maxLength ) {
+			$this->failed_validation  = true;
+			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'The text entered exceeds the maximum number of characters.', 'gravityforms' ) : $this->errorMessage;
+		}
+	}
+
 	public static function start_wp_tiny_mce_init_buffer() {
 		ob_start();
 		add_action( 'after_wp_tiny_mce', array( __class__, 'end_wp_tiny_mce_init_buffer' ), 1 );
@@ -147,8 +175,8 @@ class GF_Field_Textarea extends GF_Field {
 
 			list( $search, $open_tag, $guts, $close_tag ) = $match;
 
-			$custom  = 'for( var id in tinymce.editors ) { tinymce.EditorManager.remove( tinymce.editors[id] ); }';
-			$replace = sprintf( "%s\njQuery( document ).bind( 'gform_post_render', function() { \n%s\n%s } );\n%s", $open_tag, $custom, $guts, $close_tag );
+			$custom  = "if ( typeof current_page === 'undefined' ) { return; }\nfor( var id in tinymce.editors ) { tinymce.EditorManager.remove( tinymce.editors[id] ); }";
+			$replace = sprintf( "%s\njQuery( document ).bind( 'gform_post_render', function( event, form_id, current_page ) { \n%s\n%s } );\n%s", $open_tag, $custom, $guts, $close_tag );
 			$script  = str_replace( $search, $replace, $script );
 
 		}
@@ -217,18 +245,22 @@ class GF_Field_Textarea extends GF_Field {
 
 	/**
 	 * Format the entry value for when the field/input merge tag is processed. Not called for the {all_fields} merge tag.
+	 *
 	 * Return a value that is safe for the context specified by $format.
 	 *
-	 * @param string|array $value The field value. Depending on the location the merge tag is being used the following functions may have already been applied to the value: esc_html, nl2br, and urlencode.
-	 * @param string $input_id The field or input ID from the merge tag currently being processed.
-	 * @param array $entry The Entry Object currently being processed.
-	 * @param array $form The Form Object currently being processed.
-	 * @param string $modifier The merge tag modifier. e.g. value
-	 * @param string|array $raw_value The raw field value from before any formatting was applied to $value.
-	 * @param bool $url_encode Indicates if the urlencode function may have been applied to the $value.
-	 * @param bool $esc_html Indicates if the esc_html function may have been applied to the $value.
-	 * @param string $format The format requested for the location the merge is being used. Possible values: html, text or url.
-	 * @param bool $nl2br Indicates if the nl2br function may have been applied to the $value.
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param string|array $value      The field value. Depending on the location the merge tag is being used the following functions may have already been applied to the value: esc_html, nl2br, and urlencode.
+	 * @param string       $input_id   The field or input ID from the merge tag currently being processed.
+	 * @param array        $entry      The Entry Object currently being processed.
+	 * @param array        $form       The Form Object currently being processed.
+	 * @param string       $modifier   The merge tag modifier. e.g. value
+	 * @param string|array $raw_value  The raw field value from before any formatting was applied to $value.
+	 * @param bool         $url_encode Indicates if the urlencode function may have been applied to the $value.
+	 * @param bool         $esc_html   Indicates if the esc_html function may have been applied to the $value.
+	 * @param string       $format     The format requested for the location the merge is being used. Possible values: html, text or url.
+	 * @param bool         $nl2br      Indicates if the nl2br function may have been applied to the $value.
 	 *
 	 * @return string
 	 */
@@ -252,6 +284,41 @@ class GF_Field_Textarea extends GF_Field {
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Determines if the RTE can be enabled for the current field and user.
+	 *
+	 * @since 2.2.5.14
+	 *
+	 * @return bool
+	 */
+	public function is_rich_edit_enabled() {
+		if ( ! $this->useRichTextEditor ) {
+			return false;
+		}
+
+		global $wp_rich_edit;
+		$wp_rich_edit = null;
+
+		add_filter( 'get_user_option_rich_editing', array( $this, 'filter_user_option_rich_editing' ) );
+		$user_can_rich_edit = user_can_richedit();
+		remove_filter( 'get_user_option_rich_editing', array( $this, 'filter_user_option_rich_editing' ) );
+
+		return $user_can_rich_edit;
+	}
+
+	/**
+	 * Filter the rich_editing option for the current user.
+	 *
+	 * @since 2.2.5.14
+	 *
+	 * @param string $value The value of the rich_editing option for the current user.
+	 *
+	 * @return string
+	 */
+	public function filter_user_option_rich_editing( $value ) {
+		return 'true';
 	}
 }
 

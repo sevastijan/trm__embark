@@ -303,7 +303,7 @@ if ( class_exists( 'GFForms' ) ) {
 
 					<div>
 						Please read through the <a target="_blank"
-						                           href="http://www.gravityhelp.com/documentation/page/Gravity_Forms_API">Gravity
+						                           href="https://docs.gravityforms.com/gravity-forms-api/">Gravity
 							Forms API Documentation</a> before attempting to use the API.
 					</div>
 					<h4>URL Generator</h4>
@@ -1846,6 +1846,10 @@ if ( class_exists( 'GFForms' ) ) {
 			require_once GFCommon::get_base_path() . '/includes/phpqrcode/phpqrcode.php';
 			$settings = get_option( 'gravityformsaddon_gravityformswebapi_settings' );
 			if ( empty( $settings ) ) {
+				die();
+			}
+
+			if ( ! GFAPI::current_user_can_any( 'gravityforms_api_settings' ) ) {
 				die();
 			}
 

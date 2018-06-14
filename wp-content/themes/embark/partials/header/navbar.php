@@ -13,11 +13,11 @@
                         <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about" class="nav-link">About</a>
                     </li><!-- /.nav-item -->
                     <li class="nav-item dropdown">
-                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#help" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
+                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#features" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
                         <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">First</a>
-                            <a href="#" class="dropdown-item">second</a>
-                            <a href="#" class="dropdown-item">Three</a>
+                            <a href="#features" class="dropdown-item">First</a>
+                            <a href="#features" class="dropdown-item">Second</a>
+                            <a href="#features" class="dropdown-item">Three</a>
                         </div>
                     </li><!-- /.nav-item dropdown -->
                 </ul><!-- /.navbar-nav mr-auto -->
@@ -28,7 +28,7 @@
                 </button>
             </div><!-- /.col col-auto -->
             <div class="col col-auto d-none d-md-flex">
-                <a href="#" class="embark-button embark-button--small embark-button__full-background embark-button__full-background--primary-color mt-0">Get in touch</a>
+                <a href="#get-in-touch" class="embark-button embark-button--small embark-button__full-background embark-button__full-background--primary-color mt-0">Get in touch</a>
             </div><!-- /.col col-auto d-none d-md-flex -->
         </div><!-- /.row align-items-center justify-content-between w-100 no-gutters -->
     </div><!-- /.container -->
