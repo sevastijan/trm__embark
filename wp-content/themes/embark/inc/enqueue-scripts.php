@@ -35,7 +35,7 @@
 
     add_filter('crunch_load_jquery_in_footer',
     function($in_footer) {
-        if (is_page_template( 'page-templates/contact-bak.php' )) {
+        if (is_page_template( 'templates/homepage.php' )) {
             $in_footer = false;
         }
 

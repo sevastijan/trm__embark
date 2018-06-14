@@ -5,17 +5,29 @@
     /* ~~~~~~~~~~ Body ~~~~~~~~~~ */
 
     body {
-        // @include primary-font('regular');
-        // @include fluid-type(16px, 18px);
+        @include primary-font();
+        @include fluid-type(18px, 21px);
         background: #fff;
+        color: #54565a;
     }
 
 
     /* ~~~~~~~~~~ Headlines ~~~~~~~~~~ */
 
+    h1,
+    h2,
+    h3 {
+        @include secondary-font('light');
+    }
+
     h1 {
-        // @include primary-font('regular');
-        // @include fluid-type(32px, 42px);
+        @include fluid-type(32px, 38px, 1.5);
+        color: #fff;
+    }
+
+    h2 {
+        @include fluid-type(30px, 35px, 1.2);
+        color: #004c66;
     }
 
 
@@ -23,7 +35,7 @@
 
     b,
     strong {
-        // @include primary-font('bold');
+        @include primary-font('semi-bold');
     }
 
     em {
@@ -120,45 +132,54 @@
 
     #main {
         overflow: hidden;
-        padding-top: 52px;
-
-        @include media-breakpoint-up(sm) {
-            padding-top: 58px;
-        }
-
-        @include media-breakpoint-up(md) {
-            padding-top: 64px;
-        }
-
-        @include media-breakpoint-up(lg) {
-            padding-top: 70px;
-        }
-
-        @include media-breakpoint-up(xl) {
-            padding-top: 71px;
-        }
+        padding-top: 0;
 
         .admin-bar & {
-            padding-top: 52px + $mobile-wp-admin-bar-height;
-
-            @include media-breakpoint-up(sm) {
-                padding-top: 58px + $mobile-wp-admin-bar-height;
-            }
-
-            @include media-breakpoint-up(md) {
-                padding-top: 64px + $mobile-wp-admin-bar-height;
-            }
+            padding-top: 0 + $mobile-wp-admin-bar-height;
 
             @media screen and (min-width: 783px) {
-                padding-top: 64px + $desktop-wp-admin-bar-height;
+                padding-top: 0 + $desktop-wp-admin-bar-height;
+            }
+        }
+    }
+
+
+    /* ~~~~~~~~~~ Buttons ~~~~~~~~~~ */
+
+    .embark-button {
+        @include primary-font('medium');
+        @include fluid-type(20px, 24px, 1.2);
+        padding: 10px 10px 12.5px 10px;
+        display: inline-block;
+
+        &__full-background {
+            border-radius: 6px;
+
+            &--primary-color {
+                background: $primary-color;
+                color: #fff;
+
+                &:hover,
+                &:focus {
+                    background: darken($primary-color, 10%);
+                    color: #fff;
+                }
             }
 
-            @include media-breakpoint-up(lg) {
-                padding-top: 70px + $desktop-wp-admin-bar-height;
-            }
+            &--secondary-color {
+                background: $secondary-color;
+                color: #fff;
 
-            @include media-breakpoint-up(xl) {
-                padding-top: 71px + $desktop-wp-admin-bar-height;
+                &:hover,
+                &:focus {
+                    background: darken($secondary-color, 10%);
+                    color: #fff;
+                }
             }
+        }
+
+        &--small {
+            @include fluid-type(14px, 16px, 1);
+            padding: 7.5px 20px;
         }
     }

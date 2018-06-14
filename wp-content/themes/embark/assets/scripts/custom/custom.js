@@ -242,6 +242,38 @@
                 }, 'xml');
             });
 
+
+            /* ~~~~~~~~~~ Input And Textarea Functions ~~~~~~~~~~ */
+
+            $('.ginput_container > input, .ginput_container > textarea').each(function() {
+                if( $(this).val() ) {
+                    $(this).parent().parent().addClass('gfield--active');
+                    $(this).parent().addClass('ginput_container-active');
+                }
+            });
+
+            $('.ginput_container > input').each(function() {
+                $(this).parent().addClass('ginput_container-inactive');
+            });
+
+            $('.ginput_container > input').focus(function () {
+                $(this).parent().parent().addClass('gfield--active');
+                $(this).parent().addClass('ginput_container-active');
+            }).blur(function () {
+                if ($(this).val() === '') {
+                    $(this).parent().parent().removeClass('gfield--active');
+                    $(this).parent().removeClass('ginput_container-active');
+                }
+            });
+
+
+            /* ~~~~~~~~~~ Play Iframe Video ~~~~~~~~~~ */
+
+            $('.play-button').click(function(){
+                $(this).parent().addClass('no-after');
+                $(this).parent().html('<iframe src="'+$(this).data('vimeo-src')+'?portrait=0&title=0&badge=0&byline=0&autoplay=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+            });
+
     });
 
 

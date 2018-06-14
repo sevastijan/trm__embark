@@ -183,7 +183,7 @@ var COMPATIBILITY = [
         browserSync.init({
             open: 'local',
             browser: 'firefox',
-            proxy: 'localhost/project-name/',
+            proxy: 'localhost/embark/',
             files: [
                 '**/*.jpg',
                 '**/*.png',
