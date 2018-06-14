@@ -39,6 +39,7 @@
 		&__form {
 			> input {
 				width: 70%;
+				max-width: calc(100% - 120px);
 				height: 55px;
 				float: left;
 				font-size: 14px;
@@ -66,6 +67,7 @@
 				width: 30%;
 				height: 55px;
 				background: transparent;
+				min-width: 120px;
 				margin-left: -2px;
 				border-left-color: transparent;
 				border-radius: 0 4px 4px 0;

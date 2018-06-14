@@ -33,12 +33,12 @@
 			@include media-breakpoint-up(md) {
 				padding-left: 40px;
 				padding-right: 40px;
-				max-width: 495px;
 			}
 
 			@include media-breakpoint-up(lg) {
 				padding-left: 45px;
 				padding-right: 45px;
+				max-width: 495px;
 			}
 
 			@include media-breakpoint-up(xl) {
@@ -87,7 +87,7 @@
 
 			&:before {
 				left: 0;
-				top: calc(50% - 5px);
+				top: 15px;
 				position: absolute;
 
 				@include media-breakpoint-up(sm) {
@@ -115,25 +115,15 @@
 				bottom: 10px;
 				transform: rotate(180deg);
 				margin-left: 10px;
-				margin-right: -25px;
-
-				@include media-breakpoint-up(sm) {
-					margin-right: -30px;
-				}
+				margin-right: -50px;
 
 				@include media-breakpoint-up(md) {
-					margin-right: -40px;
 					margin-bottom: -5px;
-				}
-
-				@include media-breakpoint-up(lg) {
-					margin-right: -45px;
 				}
 
 				@include media-breakpoint-up(xl) {
 					right: -50px;
 					margin-bottom: -7.5px;
-					margin-right: -50px;
 				}
 			}
 		}
@@ -277,6 +267,10 @@
 			}
 
 			&__icon {
+				display: block;
+				max-width: 90px;
+				max-height: 75px;
+
 				path,
 				* {
 					stroke: #455963;
@@ -374,6 +368,9 @@
 		}
 
 		&__icon {
+			width: 65px;
+			height: 70px;
+
 			path,
 			* {
 				clip-path: none;
@@ -445,6 +442,26 @@
 				@include media-breakpoint-up(xl) {
 					width: 60px;
 					height: 60px;
+				}
+			}
+
+			&__icon {
+				width: 40px;
+
+				@include media-breakpoint-up(sm) {
+					width: 45px;
+				}
+
+				@include media-breakpoint-up(md) {
+					width: 50px;
+				}
+
+				@include media-breakpoint-up(lg) {
+					width: 55px;
+				}
+
+				@include media-breakpoint-up(xl) {
+					width: 60px;
 				}
 			}
 
@@ -535,7 +552,7 @@
 
 				&:before {
 					left: 0;
-					top: calc(50% - 5px);
+					top: 30px;
 					position: absolute;
 
 					@include media-breakpoint-up(sm) {
@@ -563,25 +580,15 @@
 					bottom: 10px;
 					transform: rotate(180deg);
 					margin-left: 10px;
-					margin-right: -25px;
-
-					@include media-breakpoint-up(sm) {
-						margin-right: -30px;
-					}
+					margin-right: -50px;
 
 					@include media-breakpoint-up(md) {
-						margin-right: -40px;
 						margin-bottom: -5px;
-					}
-
-					@include media-breakpoint-up(lg) {
-						margin-right: -45px;
 					}
 
 					@include media-breakpoint-up(xl) {
 						right: -50px;
 						margin-bottom: -7.5px;
-						margin-right: -50px;
 					}
 				}
 			}
