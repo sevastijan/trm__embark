@@ -27,7 +27,6 @@
 		}
 
 		&__title-wrapper {
-			padding-left: 10px;
 			padding-right: 10px;
 
 			@include media-breakpoint-up(md) {
@@ -494,7 +493,6 @@
 			}
 
 			&__title-wrapper {
-				padding-left: 10px;
 				padding-right: 10px;
 
 				@include media-breakpoint-up(md) {

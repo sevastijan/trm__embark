@@ -42,6 +42,14 @@
         font-style: italic;
     }
 
+    svg {
+        .cls-2,
+        .cls-3,
+        .cls-4 {
+            clip-path: none !important;
+        }
+    }
+
 
     /* ~~~~~~~~~~ To top ~~~~~~~~~~ */
 
