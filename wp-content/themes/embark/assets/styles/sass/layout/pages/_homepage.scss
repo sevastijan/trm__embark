@@ -758,6 +758,11 @@
 				}
 			}
 		}
+
+		&__second-content {
+			@include primary-font('semi-bold');
+			color: #004c66;
+		}
 	}
 
 	.cta {

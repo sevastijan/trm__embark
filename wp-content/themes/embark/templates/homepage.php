@@ -163,12 +163,12 @@
 							<?php the_field( 'for_who_content_2' ); ?>
 						</div><!-- /.single-customer-area__content content element-small-margin-top -->
 
-						<?php if ( have_rows( 'for_who_accordion_1' ) ) : ?>
+						<?php if ( have_rows( 'for_who_accordion_2' ) ) : ?>
 
 							<div class="single-customer-area__accordion accordion text-left element-medium-margin-top" id="accordion-2">
 
 								<?php $loop_counter = 1; ?>
-								<?php while ( have_rows( 'for_who_accordion_1' ) ) : the_row(); ?>
+								<?php while ( have_rows( 'for_who_accordion_2' ) ) : the_row(); ?>
 
 									<div class="card">
 										<div class="card-header" id="heading_two_<?= $loop_counter; ?>">
@@ -309,6 +309,9 @@
 					<div class="get-in-touch__form element-small-margin-top">
 						<?php echo do_shortcode( '[gravityform id="1" title="false" description="false" ajax="true"]' ); ?>
 					</div><!-- /.get-in-touch__form element-small-margin-top -->
+					<div class="get-in-touch__second-content content element-small-margin-top">
+						<?php the_field( 'get_in_touch_second_content' ); ?>
+					</div><!-- /.get-in-touch__second-content content element-small-margin-top -->
 				</div><!-- /.col-md-9 clo-lg-8 col-xl-7 mx-auto -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
