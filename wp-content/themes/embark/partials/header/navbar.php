@@ -13,11 +13,12 @@
                         <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about" class="nav-link">About</a>
                     </li><!-- /.nav-item -->
                     <li class="nav-item dropdown">
-                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#features" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
+                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#sectors" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
                         <div class="dropdown-menu">
-                            <a href="#features" class="dropdown-item">First</a>
-                            <a href="#features" class="dropdown-item">Second</a>
-                            <a href="#features" class="dropdown-item">Three</a>
+                            <a href="#banking" class="dropdown-item">Banking</a>
+                            <a href="#insurance" class="dropdown-item">Insurance</a>
+                            <a href="#landing" class="dropdown-item">Lending</a>
+                            <a href="#debt" class="dropdown-item">Debt</a>
                         </div>
                     </li><!-- /.nav-item dropdown -->
                 </ul><!-- /.navbar-nav mr-auto -->
