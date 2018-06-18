@@ -7,13 +7,16 @@
             <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#features" class="dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
             <ul>
                 <li>
-                    <a href="#features">First</a>
+                    <a href="#banking" class="dropdown-item">Banking</a>
                 </li>
                 <li>
-                    <a href="#features">Second</a>
+                    <a href="#insurance" class="dropdown-item">Insurance</a>
                 </li>
                 <li>
-                    <a href="#features">Three</a>
+                    <a href="#landing" class="dropdown-item">Lending</a>
+                </li>
+                <li>
+                    <a href="#debt" class="dropdown-item">Debt</a>
                 </li>
             </ul>
         </li><!-- /.dropdown -->

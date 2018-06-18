@@ -36,6 +36,6 @@
             </div>
         <![endif]-->
 
-        <a href="javascript:" id="return-to-top" class="return-to-top d-none d-md-flex align-items-center justify-content-center">
+        <a href="javascript:" id="return-to-top" aria-label="Return to top" class="return-to-top d-none d-md-flex align-items-center justify-content-center">
             <i class="far fa-chevron-up"></i>
         </a>
