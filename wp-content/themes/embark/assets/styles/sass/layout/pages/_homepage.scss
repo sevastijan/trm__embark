@@ -91,17 +91,14 @@
 
 				@include media-breakpoint-up(sm) {
 					left: -35px;
-					top: calc(50% - 7.5px);
 				}
 
 				@include media-breakpoint-up(md) {
 					left: -45px;
-					top: calc(50% - 10px);
 				}
 
 				@include media-breakpoint-up(lg) {
 					left: -50px;
-					top: calc(50% - 15px);
 				}
 
 				@include media-breakpoint-up(xl) {
@@ -300,6 +297,10 @@
 							color: #004c66;
 							padding: 5px 50px 5px 20px;
 							position: relative;
+
+							&:focus {
+								background: rgba(#32bfbe, .4);
+							}
 
 							&[aria-expanded="true"] {
 								&:after {
@@ -555,17 +556,16 @@
 
 					@include media-breakpoint-up(sm) {
 						left: -35px;
-						top: calc(50% - 7.5px);
 					}
 
 					@include media-breakpoint-up(md) {
 						left: -45px;
-						top: calc(50% - 10px);
+						top: 30px;
 					}
 
 					@include media-breakpoint-up(lg) {
 						left: -50px;
-						top: calc(50% - 15px);
+						top: 25px;
 					}
 
 					@include media-breakpoint-up(xl) {
