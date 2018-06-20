@@ -11,18 +11,18 @@
 
 <main id="main" class="error-404-page-template">
 
-    <section class="error-404">
+    <section class="error-404 element-paddings">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 text-center">
                     <h1 class="error-404__title">Page Not Found</h1><!-- /.error-404__title -->
                     <div class="error-404__content content element-small-margin-top">
                         <p>Sorry, but the page you were trying to view does not exist.</p>
                     </div><!-- /.error-404__content content element-small-margin-top -->
-                </div><!-- /.col-12 -->
+                </div><!-- /.col-12 text-center -->
             </div><!-- /.row -->
         </div><!-- /.container -->
-    </section><!-- /.error-404 -->
+    </section><!-- /.error-404 element-paddings -->
 
 </main><!-- /#main.error-404-page-template -->
 

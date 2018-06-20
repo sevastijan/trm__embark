@@ -2,6 +2,86 @@
 /* ~~~~~~~~~~ Header ~~~~~~~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+	.mm-menu {
+	    background-color: #004c66 !important;
+
+	    .mm-panel {
+	    	padding: 0;
+
+	    	&:before {
+	    		display: none;
+	    	}
+	    }
+
+	    .mobile-nav {
+	    	margin: 0 !important;
+
+	    	.nav-item {
+	    		position: relative;
+
+	    		&:after {
+	    			display: none;
+	    		}
+
+	    		a {
+	    			@include primary-font('regular');
+	    			@include fluid-type(18px, 21px);
+	    			color: #fff;
+	    			width: 100%;
+
+	    			&.dropdown-toggle {
+	    				&:after {
+	    					display: none;
+	    				}
+	    			}
+
+	    			&:not(.mm-next) {
+	    			    &:hover,
+	    			    &:focus {
+	    			        background: $primary-color;
+	    			    }
+	    			}
+
+	    			&.mm-next {
+	    				width: 100%;
+	    				position: absolute;
+	    				left: 0;
+	    				top: 0;
+	    				color: #fff;
+	    				background: transparent !important;
+
+	    				&:before {
+	    					display: none;
+	    				}
+
+	    				&:after {
+	    					border-color: #fff;
+	    					transform: rotate(-135deg);
+	    				}
+
+    					&:hover,
+    					&:focus {
+    						& + a {
+	    						background: $primary-color;
+	    					}
+    					}
+	    			}
+	    		}
+
+	    		.mm-panel {
+	    			padding: 0;
+
+	    			li {
+	    				&:after {
+	    					display: none;
+	    				}
+	    			}
+	    		}
+	    	}
+	    }
+	}
+
+
 	.main-header {
 		@include admin-sticky-fix();
 		position: fixed;
@@ -9,10 +89,24 @@
 		width: 100%;
 		z-index: 10;
 
+		&--scrolled {
+			.navbar {
+				background: rgba(0,76,102,1) !important;
+				padding: 15px 0 !important;
+
+				.navbar-brand {
+					&__logo {
+						width: 120px !important;
+						height: 32px !important;
+					}
+				}
+			}
+		}
+
 		.navbar {
 			@extend %single-transition;
 			display: block;
-			padding: 15px 0;
+			padding: 50px 0;
 
 			.navbar-brand {
 				display: block;
@@ -170,19 +264,6 @@
 			            }
 			        }
 			    }
-			}
-		}
-
-		&--scrolled {
-			.navbar {
-				background: rgba(0,76,102,1);
-
-				.navbar-brand {
-					&__logo {
-						width: 120px;
-						height: 32px;
-					}
-				}
 			}
 		}
 	}

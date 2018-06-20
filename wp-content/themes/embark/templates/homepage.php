@@ -14,26 +14,30 @@
 	<section class="intro element-paddings">
 		<div class="container">
 			<div class="row justify-content-between">
-				<div class="col-md-6">
+				<div class="col-lg-6">
 					<div class="intro__title-wrapper">
 						<h1 class="intro__title"><?php the_title(); ?></h1><!-- /.intro__title -->
 					</div><!-- /.intro__title-wrapper -->
 					<div class="intro__content content element-small-margin-top">
 						<?php the_content(); ?>
 					</div><!-- /.intro__content content element-small-margin-top -->
-				</div><!-- /.col-md-6 -->
-				<div class="col-md-6 text-center">
+				</div><!-- /.col-lg-6 -->
+				<div class="col-lg-6 text-center">
 
 					<?php if( have_rows('action_button') ): ?>
 						<?php while( have_rows('action_button') ): the_row();  ?>
 
-							<a href="<?php the_sub_field( 'link' ); ?>" class="embark-button embark-button__full-background embark-button__full-background--secondary-color element-margin-top mt-md-0"><?php the_sub_field( 'label' ); ?></a>
+							<a href="<?php the_sub_field( 'link' ); ?>" class="embark-button embark-button__full-background embark-button__full-background--secondary-color element-margin-top mt-lg-0"><?php the_sub_field( 'label' ); ?></a>
 
 						<?php endwhile; ?>
 					<?php endif; ?>
 
-					<div class="intro__video-wrapper element-small-margin-top">
-						<div class="video-bar text-left"><span></span><span></span><span></span></div><!-- /.video-bar text-left -->
+					<div class="video element-small-margin-top">
+						<div class="video__bar text-left">
+							<span class="circle"></span>
+							<span class="circle"></span>
+							<span class="circle"></span>
+						</div><!-- /.video__bar text-left -->
 
 						<?php $placeholder = get_field( 'intro_video_placeholder' ); ?>
 						<?php if($placeholder): ?>
@@ -42,7 +46,7 @@
 							<?php preg_match('/src="(.+?)"/', $iframe, $matches); ?>
 							<?php $src = $matches[1]; ?>
 
-							<div class="intro__video-placeholder background-cover lazy" data-src="<?= $placeholder['url']; ?>"><span class="play-button" data-vimeo-src="<?= $src; ?>"></span></div><!-- /.intro__video-placeholder background-cover -->
+							<div class="video__placeholder background-cover lazy" data-src="<?= $placeholder['url']; ?>"><span class="video__play-button" data-vimeo-src="<?= $src; ?>"></span></div><!-- /.video__placeholder background-cover lazy -->
 
 						<?php else: ?>
 
@@ -50,13 +54,13 @@
 
 						<?php endif; ?>
 
-					</div><!-- /.intro__video-wrapper element-small-margin-top -->
-				</div><!-- /.col-md-6 text-center -->
+					</div><!-- /.video element-small-margin-top -->
+				</div><!-- /.col-lg-6 text-center -->
 			</div><!-- /.row justify-content-between -->
 		</div><!-- /.container -->
 	</section><!-- /.intro element-paddings -->
 
-	<section class="about-what element-padding-bottom">
+	<section id="about" class="about-what element-padding-bottom">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center">
@@ -95,27 +99,29 @@
 		</div><!-- /.container -->
 	</section><!-- /.about-how element-padding-top -->
 
-	<section class="for-who element-padding-top">
+	<section class="customer-area element-padding-top">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-md-6 text-auto col-xl-auto">
-					<div class="single-for text-center">
+					<section class="single-customer-area text-center">
 
 						<?php $icon = get_field( 'for_who_icon_1' ); ?>
 						<?php if($icon): ?>
 
-							<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-for__icon svg" />
+							<div class="single-customer-area__icon-wrapper">
+								<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-customer-area__icon svg" />
+							</div><!-- /.single-customer-area__icon-wrapper -->
 
 						<?php endif; ?>
 
-						<h2 class="single-for__title element-extra-small-margin-top"><?php the_field( 'for_who_title_1' ); ?></h2><!-- /.single-for__title element-extra-small-margin-top -->
-						<div class="single-for__content content element-small-margin-top" data-mh="single-for-match-height">
+						<h2 class="single-customer-area__title element-extra-small-margin-top"><?php the_field( 'for_who_title_1' ); ?></h2><!-- /.single-customer-area__title element-extra-small-margin-top -->
+						<div class="single-customer-area__content content element-small-margin-top" data-mh="single-customer-area-match-height">
 							<?php the_field( 'for_who_content_1' ); ?>
-						</div><!-- /.single-for__content content element-small-margin-top -->
+						</div><!-- /.single-customer-area__content content element-small-margin-top -->
 
 						<?php if ( have_rows( 'for_who_accordion_1' ) ) : ?>
 
-							<div class="single-for__accordion accordion text-left element-medium-margin-top" id="accordion-1">
+							<div class="single-customer-area__accordion accordion text-left element-medium-margin-top" id="accordion-1">
 
 								<?php $loop_counter = 1; ?>
 								<?php while ( have_rows( 'for_who_accordion_1' ) ) : the_row(); ?>
@@ -124,7 +130,7 @@
 										<div class="card-header" id="heading_one_<?= $loop_counter; ?>">
 											<button class="card-header__button<?php if($loop_counter > 1) echo ' collapsed'; ?>" type="button" data-toggle="collapse" data-target="#collapse_one_<?= $loop_counter; ?>" aria-expanded="<?php if($loop_counter == 1) {echo 'true';} else {echo 'false';} ?>" aria-controls="collapse_one_<?= $loop_counter; ?>"><?php the_sub_field( 'label' ); ?></button>
 										</div><!-- /#heading_one_1.card-header -->
-										<div id="collapse_one_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_one" data-parent="#accordion-1">
+										<div id="collapse_one_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_one_<?= $loop_counter; ?>" data-parent="#accordion-1">
 											<div class="card-body content">
 												<?php the_sub_field( 'content' ); ?>
 											</div><!-- /.card-body content -->
@@ -134,39 +140,41 @@
 									<?php $loop_counter++; ?>
 								<?php endwhile; ?>
 
-							</div><!-- /#accordion-1.single-for__accordion accordion text-left element-medium-margin-top -->
+							</div><!-- /#accordion-1.single-customer-area__accordion accordion text-left element-medium-margin-top -->
 
 						<?php endif; ?>
 
-					</div><!-- /.single-for text-center -->
+					</section><!-- /.single-customer-area text-center -->
 				</div><!-- /.col-md-6 text-auto col-xl-auto -->
 				<div class="col-md-6 text-auto col-xl-auto">
-					<div class="single-for element-margin-top mt-md-0 text-center">
+					<section class="single-customer-area element-margin-top mt-md-0 text-center">
 
 						<?php $icon = get_field( 'for_who_icon_2' ); ?>
 						<?php if($icon): ?>
 
-							<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-for__icon svg" />
+							<div class="single-customer-area__icon-wrapper">
+								<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-customer-area__icon svg" />
+							</div><!-- /.single-customer-area__icon-wrapper -->
 
 						<?php endif; ?>
 
-						<h2 class="single-for__title element-extra-small-margin-top"><?php the_field( 'for_who_title_2' ); ?></h2><!-- /.single-for__title element-extra-small-margin-top -->
-						<div class="single-for__content content element-small-margin-top" data-mh="single-for-match-height">
+						<h2 class="single-customer-area__title element-extra-small-margin-top"><?php the_field( 'for_who_title_2' ); ?></h2><!-- /.single-customer-area__title element-extra-small-margin-top -->
+						<div class="single-customer-area__content content element-small-margin-top" data-mh="single-customer-area-match-height">
 							<?php the_field( 'for_who_content_2' ); ?>
-						</div><!-- /.single-for__content content element-small-margin-top -->
+						</div><!-- /.single-customer-area__content content element-small-margin-top -->
 
-						<?php if ( have_rows( 'for_who_accordion_1' ) ) : ?>
+						<?php if ( have_rows( 'for_who_accordion_2' ) ) : ?>
 
-							<div class="single-for__accordion accordion text-left element-medium-margin-top" id="accordion-2">
+							<div class="single-customer-area__accordion accordion text-left element-medium-margin-top" id="accordion-2">
 
 								<?php $loop_counter = 1; ?>
-								<?php while ( have_rows( 'for_who_accordion_1' ) ) : the_row(); ?>
+								<?php while ( have_rows( 'for_who_accordion_2' ) ) : the_row(); ?>
 
 									<div class="card">
 										<div class="card-header" id="heading_two_<?= $loop_counter; ?>">
 											<button class="card-header__button<?php if($loop_counter > 1) echo ' collapsed'; ?>" type="button" data-toggle="collapse" data-target="#collapse_two_<?= $loop_counter; ?>" aria-expanded="<?php if($loop_counter == 1) {echo 'true';} else {echo 'false';} ?>" aria-controls="collapse_two_<?= $loop_counter; ?>"><?php the_sub_field( 'label' ); ?></button>
 										</div><!-- /#heading_two_1.card-header -->
-										<div id="collapse_two_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_two" data-parent="#accordion-2">
+										<div id="collapse_two_<?= $loop_counter; ?>" class="collapse<?php if($loop_counter == 1) echo ' show'; ?> accordion__collapse" aria-labelledby="heading_two_<?= $loop_counter; ?>" data-parent="#accordion-2">
 											<div class="card-body content">
 												<?php the_sub_field( 'content' ); ?>
 											</div><!-- /.card-body content -->
@@ -176,17 +184,17 @@
 									<?php $loop_counter++; ?>
 								<?php endwhile; ?>
 
-							</div><!-- /#accordion-2.single-for__accordion accordion text-left element-medium-margin-top -->
+							</div><!-- /#accordion-2.single-customer-area__accordion accordion text-left element-medium-margin-top -->
 
 						<?php endif; ?>
 
-					</div><!-- /.single-for element-margin-top mt-md-0 text-center -->
+					</section><!-- /.single-customer-area element-margin-top mt-md-0 text-center -->
 				</div><!-- /.col-md-6 text-auto col-xl-auto -->
 			</div><!-- /.row justify-content-between -->
 		</div><!-- /.container -->
-	</section><!-- /.for-who element-padding-top -->
+	</section><!-- /.customer-area element-padding-top -->
 
-	<section class="key-facts element-paddings element-margin-top mt-md-0">
+	<section id="features" class="features element-paddings element-margin-top">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
@@ -196,18 +204,20 @@
 						<?php if($icon): ?>
 
 							<div class="col col-auto">
-								<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="key-facts__icon svg" />
+								<div class="features__icon-wrapper">
+									<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="features__icon svg" />
+								</div><!-- /.features__icon-wrapper -->
 							</div><!-- /.col col-auto -->
 
 						<?php endif; ?>
 
 						<div class="col">
-							<h2 class="key-facts__title"><?php the_field( 'key_facts_title' ); ?></h2><!-- /.key-facts__title -->
+							<h2 class="features__title"><?php the_field( 'key_facts_title' ); ?></h2><!-- /.features__title -->
 						</div><!-- /.col -->
 						<div class="col-12">
-							<div class="key-facts__content content element-extra-small-margin-top">
+							<div class="features__content content element-extra-small-margin-top">
 								<?php the_field( 'key_facts_content' ); ?>
-							</div><!-- /.key-facts__content content element-extra-small-margin-top -->
+							</div><!-- /.features__content content element-extra-small-margin-top -->
 						</div><!-- /.col-12 -->
 					</div><!-- /.row no-gutters -->
 				</div><!-- /.col-md-6 -->
@@ -219,15 +229,15 @@
 					<?php $image = get_field( 'key_facts_image' ); ?>
 					<?php if($image): ?>
 
-						<img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>" class="key-facts__image element-margin-top w-100 d-md-none" />
+						<img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>" class="features__image element-margin-top w-100 d-md-none" />
 
-						<svg id="Warstwa_1" class="key-facts__image element-margin-top d-none d-md-block" data-name="Warstwa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1351.92 833.76">
+						<svg id="Warstwa_1" class="features__image element-margin-top d-none d-md-block" data-name="Warstwa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1351.92 833.76">
 							<defs>
 								<style>.cls-1{fill:#fff;}</style>
 							</defs>
 							<title>laptop</title>
 
-							<image width="5633" height="4224" transform="translate(0 -180) scale(0.24)" xlink:href="<?php echo get_template_directory_uri(); ?>/images/laptop.png"/>
+							<image width="5633" height="4224" transform="translate(0 -180) scale(0.24)" xlink:href="<?php echo get_template_directory_uri(); ?>/images/img__laptop.png"/>
 							<image id="image-em" x="228" y="40" width="918" height="571" xlink:href="<?= $image['url']; ?>"></image>
 						</svg>
 
@@ -237,9 +247,9 @@
 						<div class="impression__title-wrapper">
 							<h3 class="impression__title"><?php the_field( 'impression_title' ); ?></h3><!-- /.impression__title -->
 						</div><!-- /.impression__title-wrapper -->
-						<div class="impression__content content">
+						<div class="impression__content content element-extra-small-margin-top">
 							<?php the_field( 'impression_content' ); ?>
-						</div><!-- /.impression__content content -->
+						</div><!-- /.impression__content content element-extra-small-margin-top -->
 					</div><!-- /.impression element-margin-top d-none d-md-block -->
 
 				</div><!-- /.col-md-6 -->
@@ -248,26 +258,28 @@
 					<?php if ( have_rows( 'key_facts' ) ) : ?>
 						<?php while ( have_rows( 'key_facts' ) ) : the_row(); ?>
 
-							<div class="single-fact element-medium-margin-top">
+							<div class="single-feature element-medium-margin-top">
 								<div class="row no-gutters">
 
 									<?php $icon = get_sub_field( 'icon' ); ?>
 									<?php if($icon): ?>
 
 										<div class="col col-auto">
-											<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-fact__icon svg" />
+											<div class="single-feature__icon-wrapper">
+												<img src="<?= $icon['url']; ?>" alt="<?= $icon['alt']; ?>" class="single-feature__icon svg" />
+											</div><!-- /.single-feature__icon-wrapper -->
 										</div><!-- /.col col-auto -->
 
 									<?php endif; ?>
 
 									<div class="col">
-										<h3 class="single-fact__title"><?php the_sub_field( 'title' ); ?></h3><!-- /.single-fact__title -->
-										<div class="single-fact__content content element-extra-small-margin-top">
+										<h3 class="single-feature__title"><?php the_sub_field( 'title' ); ?></h3><!-- /.single-feature__title -->
+										<div class="single-feature__content content element-extra-small-margin-top">
 											<?php the_sub_field( 'content' ); ?>
-										</div><!-- /.single-fact__content content element-extra-small-margin-top -->
+										</div><!-- /.single-feature__content content element-extra-small-margin-top -->
 									</div><!-- /.col -->
 								</div><!-- /.row no-gutters -->
-							</div><!-- /.single-fact element-medium-margin-top -->
+							</div><!-- /.single-feature element-medium-margin-top -->
 
 						<?php endwhile; ?>
 					<?php endif; ?>
@@ -276,17 +288,17 @@
 						<div class="impression__title-wrapper">
 							<h3 class="impression__title"><?php the_field( 'impression_title' ); ?></h3><!-- /.impression__title -->
 						</div><!-- /.impression__title-wrapper -->
-						<div class="impression__content content">
+						<div class="impression__content content element-extra-small-margin-top">
 							<?php the_field( 'impression_content' ); ?>
-						</div><!-- /.impression__content content -->
+						</div><!-- /.impression__content content element-extra-small-margin-top -->
 					</div><!-- /.impression element-margin-top d-md-none -->
 
 				</div><!-- /.col-md-6 -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
-	</section><!-- /.key-facts element-paddings element-margin-top mt-md-0 -->
+	</section><!-- /.features element-paddings element-margin-top -->
 
-	<section class="get-in-touch text-center element-paddings">
+	<section id="get-in-touch" class="get-in-touch text-center element-paddings">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9 clo-lg-8 col-xl-7 mx-auto">
@@ -297,6 +309,9 @@
 					<div class="get-in-touch__form element-small-margin-top">
 						<?php echo do_shortcode( '[gravityform id="1" title="false" description="false" ajax="true"]' ); ?>
 					</div><!-- /.get-in-touch__form element-small-margin-top -->
+					<div class="get-in-touch__second-content content element-small-margin-top">
+						<?php the_field( 'get_in_touch_second_content' ); ?>
+					</div><!-- /.get-in-touch__second-content content element-small-margin-top -->
 				</div><!-- /.col-md-9 clo-lg-8 col-xl-7 mx-auto -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->

@@ -1,13 +1,13 @@
 <?php wp_footer(); ?>
 
-<!-- <script>
+<script>
     /* ~~~~~~~~~~ Fonts ~~~~~~~~~~ */
 
     WebFontConfig = {
-        typekit: { id: 'yiu8nsr' },
-        google: {
-            families: ['Fira Sans:400,400i,500,600,700', 'sans-serif']
-        }
+        typekit: { id: 'zzj4jae' }
+        // google: {
+        //     families: ['Fira Sans:400,400i,500,600,700', 'sans-serif']
+        // }
     };
 
     (function(d) {
@@ -16,4 +16,4 @@
         wf.async = true;
         s.parentNode.insertBefore(wf, s);
     })(document);
-</script> -->
+</script>

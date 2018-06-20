@@ -19,9 +19,9 @@ var PATHS = {
     sass: [
         'bower_components/css-hamburgers/_sass',
         'bower_components/fancybox/dist',
-        'bower_components/gray/css',
+        // 'bower_components/gray/css',
         'bower_components/jQuery.mmenu/dist/css',
-        'bower_components/owl.carousel/src/scss'
+        // 'bower_components/owl.carousel/src/scss'
     ],
     javascript: [
 
@@ -32,7 +32,7 @@ var PATHS = {
 
         'bower_components/fancybox/dist/jquery.fancybox.js',
 
-        'bower_components/gray/js/jquery.gray.js',
+        // 'bower_components/gray/js/jquery.gray.js',
 
         'bower_components/jquery-lazy/jquery.lazy.js',
 
@@ -44,23 +44,23 @@ var PATHS = {
 
         'bower_components/matchHeight/jquery.matchHeight.js',
 
-        'bower_components/owl.carousel/dist/owl.carousel.js',
+        // 'bower_components/owl.carousel/dist/owl.carousel.js',
 
         'bower_components/webfontloader/webfontloader.js',
 
 
         /* ~~~~~~~~~~ Core scripts ~~~~~~~~~~ */
 
-        'assets/scripts/core/bootstrap/alert.js',
+        // 'assets/scripts/core/bootstrap/alert.js',
         // 'assets/scripts/core/bootstrap/button.js',
         // 'assets/scripts/core/bootstrap/carousel.js',
         'assets/scripts/core/bootstrap/collapse.js',
         'assets/scripts/core/bootstrap/dropdown.js',
-        'assets/scripts/core/bootstrap/modal.js',
+        // 'assets/scripts/core/bootstrap/modal.js',
         // 'assets/scripts/core/bootstrap/popover.js',
         'assets/scripts/core/bootstrap/scrollspy.js',
         'assets/scripts/core/bootstrap/tab.js',
-        'assets/scripts/core/bootstrap/tooltip.js',
+        // 'assets/scripts/core/bootstrap/tooltip.js',
         'assets/scripts/core/bootstrap/util.js',
 
 
