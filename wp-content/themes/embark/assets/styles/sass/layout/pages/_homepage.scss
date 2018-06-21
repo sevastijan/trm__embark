@@ -245,12 +245,6 @@
 		background: rgba(#004c66, .1);
 	}
 
-	.about-how {
-		&__content {
-			@include fluid-type(17px, 19px, 1.2);
-		}
-	}
-
 	.customer-area {
 		.single-customer-area {
 			max-width: 510px;
