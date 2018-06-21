@@ -13,19 +13,20 @@
 
 		&__address,
 		&__nav,
-		&__description {
+		&__description,
+		.menu {
 			color: rgba(#fff, .7);
 			font-size: 14px;
 			line-height: 1.75;
 
-			.nav-item {
+			.menu-item {
 				margin-top: 10px;
 
 				&:first-child {
 					margin-top: 0;
 				}
 
-				.nav-link {
+				a {
 					padding: 0;
 
 					&:hover,
@@ -34,6 +35,12 @@
 					}
 				}
 			}
+		}
+
+		.menu {
+			@extend .list-unstyled,
+					.element-small-margin-top;
+
 		}
 
 		&__form {
@@ -116,6 +123,10 @@
 					}
 
 					.menu-item {
+						@include media-breakpoint-up(md) {
+							margin-top: 0;
+						}
+
 						&:after {
 							@include media-breakpoint-up(md) {
 								content: '|';

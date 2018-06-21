@@ -179,6 +179,15 @@
 						border: 1px solid #e7e7e7;
 						padding: 0;
 
+						&--laguage {
+							min-width: 0;
+
+							.dropdown-item {
+								padding-left: 10px !important;
+								padding-right: 10px !important;
+							}
+						}
+
 						&:after {
 							content: '';
 							position: absolute;
@@ -236,6 +245,13 @@
 								&:before {
 									background-color: $primary-color;
 								}
+							}
+
+							img {
+								width: 20px;
+								max-height: 15px;
+								border-radius: 2px;
+								margin-right: 5px;
 							}
 						}
 					}

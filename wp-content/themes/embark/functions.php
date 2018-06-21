@@ -9,21 +9,21 @@
 
 	/* ~~~~~~~~~~ Add options page to Wordpress with ACF ~~~~~~~~~ */
 
-	// if( function_exists('acf_add_options_page') ) {
-	//     acf_add_options_page(array(
-	//         'page_title'    => get_bloginfo('name'),
-	//         'menu_title'    => get_bloginfo('name'),
-	//         'menu_slug'     => 'theme-general-settings',
-	//         'capability'    => 'edit_posts',
-	//         'redirect'      => false
-	//     ));
+	if( function_exists('acf_add_options_page') ) {
+	    acf_add_options_page(array(
+	        'page_title'    => get_bloginfo('name'),
+	        'menu_title'    => get_bloginfo('name'),
+	        'menu_slug'     => 'theme-general-settings',
+	        'capability'    => 'edit_posts',
+	        'redirect'      => false
+	    ));
 
-	//     acf_add_options_sub_page(array(
-	//         'page_title'    => 'Home',
-	//         'menu_title'    => 'Home',
-	//         'parent_slug'   => 'theme-general-settings',
-	//     ));
-	// }
+	    acf_add_options_sub_page(array(
+	        'page_title'    => 'Laguage switcher',
+	        'menu_title'    => 'Laguage switcher',
+	        'parent_slug'   => 'theme-general-settings',
+	    ));
+	}
 
 
 	/* ~~~~~~~~~~ Add custom Wordpress navigation ~~~~~~~~~~ */
@@ -32,7 +32,9 @@
 		register_nav_menus(
 			array(
 				'main_navigation' => 'Main Navigation',
-				'footer_navigation' => 'Footer Navigation'
+				'footer_navigation' => 'Footer Navigation',
+				'footer_navigation_left_column' => 'Footer Navigation - left column',
+				'footer_navigation_right_column' => 'Footer Navigation - right column'
 			)
 		);
 	}
