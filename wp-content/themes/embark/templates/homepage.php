@@ -60,46 +60,7 @@
 		</div><!-- /.container -->
 	</section><!-- /.intro element-paddings -->
 
-	<section id="about" class="about-what element-padding-bottom">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h2 class="about-what__title"><?php the_field( 'what_title' ); ?></h2><!-- /.about-what__title -->
-					<div class="about-what__content content element-small-margin-top">
-						<?php the_field( 'what_content' ); ?>
-					</div><!-- /.about-what__content content element-small-margin-top -->
-				</div><!-- /.col-12 text-center -->
-			</div><!-- /.row -->
-		</div><!-- /.container -->
-	</section><!-- /.about-what element-padding-bottom -->
-
-	<section class="about-why element-paddings">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h2 class="about-why__title"><?php the_field( 'why_title' ); ?></h2><!-- /.about-why__title -->
-					<div class="about-why__content content element-small-margin-top">
-						<?php the_field( 'why_content' ); ?>
-					</div><!-- /.about-why__content content element-small-margin-top -->
-				</div><!-- /.col-12 text-center -->
-			</div><!-- /.row -->
-		</div><!-- /.container -->
-	</section><!-- /.about-why element-paddings -->
-
-	<section class="about-how element-padding-top">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-10 col-lg-9 mx-auto">
-					<h2 class="about-how__title text-center"><?php the_field( 'how_title' ); ?></h2><!-- /.about-how__title text-center -->
-					<div class="about-how__content content element-small-margin-top">
-						<?php the_field( 'how_content' ); ?>
-					</div><!-- /.about-how__content content element-small-margin-top -->
-				</div><!-- /.col-md-10 col-lg-9 mx-auto -->
-			</div><!-- /.row -->
-		</div><!-- /.container -->
-	</section><!-- /.about-how element-padding-top -->
-
-	<section class="customer-area element-padding-top">
+	<section class="customer-area element-padding-bottom">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-md-6 text-auto col-xl-auto">
@@ -192,7 +153,50 @@
 				</div><!-- /.col-md-6 text-auto col-xl-auto -->
 			</div><!-- /.row justify-content-between -->
 		</div><!-- /.container -->
-	</section><!-- /.customer-area element-padding-top -->
+	</section><!-- /.customer-area element-padding-bottom -->
+
+	<?php if(get_field( 'show_this_section' )): ?>
+
+		<section id="about" class="about-what element-padding-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2 class="about-what__title"><?php the_field( 'what_title' ); ?></h2><!-- /.about-what__title -->
+						<div class="about-what__content content element-small-margin-top">
+							<?php the_field( 'what_content' ); ?>
+						</div><!-- /.about-what__content content element-small-margin-top -->
+					</div><!-- /.col-12 text-center -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.about-what element-padding-bottom -->
+
+	<?php endif; ?>
+
+	<section class="about-why element-paddings">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="about-why__title"><?php the_field( 'why_title' ); ?></h2><!-- /.about-why__title -->
+					<div class="about-why__content content element-small-margin-top">
+						<?php the_field( 'why_content' ); ?>
+					</div><!-- /.about-why__content content element-small-margin-top -->
+				</div><!-- /.col-12 text-center -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section><!-- /.about-why element-paddings -->
+
+	<section class="about-how element-padding-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-lg-9 mx-auto">
+					<h2 class="about-how__title text-center"><?php the_field( 'how_title' ); ?></h2><!-- /.about-how__title text-center -->
+					<div class="about-how__content content element-small-margin-top">
+						<?php the_field( 'how_content' ); ?>
+					</div><!-- /.about-how__content content element-small-margin-top -->
+				</div><!-- /.col-md-10 col-lg-9 mx-auto -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section><!-- /.about-how element-padding-top -->
 
 	<section id="features" class="features element-paddings element-margin-top">
 		<div class="container">
