@@ -24,17 +24,16 @@
         <?php if(get_field( 'show_switcher', 'options' )): ?>
 
             <li class="nav-item dropdown">
-                <a href="#dropdown" class="dropdown-toggle" data-toggle="dropdown"><?php the_field( 'dropdown_label', 'options' ); ?></a>
+                <a href="#dropdown" class="dropdown-toggle" data-toggle="dropdown">Language</a>
 
                 <?php if ( have_rows( 'language', 'options' ) ) : ?>
 
                     <ul>
 
                          <?php while ( have_rows( 'language', 'options' ) ) : the_row(); ?>
-                            <?php $flag = get_sub_field( 'flag' ); ?>
 
                             <li>
-                                <a href="<?php the_sub_field( 'url' ); ?>" class="dropdown-item"><img src="<?= $flag['url']; ?>" alt="<?= $flag['alt']; ?>" class="icon-flag d-inline-block" /> <?php the_sub_field( 'name' ); ?></a>
+                                <a href="<?php the_sub_field( 'url' ); ?>" class="dropdown-item"><?php the_sub_field( 'name' ); ?></a>
                             </li>
 
                         <?php endwhile; ?>
