@@ -215,6 +215,11 @@
                 $(this).parent().html('<iframe src="'+$(this).data('vimeo-src')+'?portrait=0&title=0&badge=0&byline=0&autoplay=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
             });
 
+
+            /* ~~~~~~~~~~ Fix dropdown in Mobile menu ~~~~~~~~~~ */
+
+            $('.mobile-nav .dropdown-menu').removeClass('dropdown-menu');
+
     });
 
 

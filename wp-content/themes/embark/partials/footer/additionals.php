@@ -1,49 +1,43 @@
 <nav id="mobile-navigation">
-   <ul class="mobile-nav mr-auto">
-        <li class="nav-item">
-            <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about">About</a>
-        </li><!-- /.nav-item -->
-        <li class="nav-item dropdown">
-            <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#features" class="dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
-            <ul>
-                <li>
-                    <a href="#banking" class="dropdown-item">Banking</a>
-                </li>
-                <li>
-                    <a href="#insurance" class="dropdown-item">Insurance</a>
-                </li>
-                <li>
-                    <a href="#landing" class="dropdown-item">Lending</a>
-                </li>
-                <li>
-                    <a href="#debt" class="dropdown-item">Debt</a>
-                </li>
-            </ul>
-        </li><!-- /.dropdown -->
+    <div id="subpanel" class="panel">
 
-        <?php if(get_field( 'show_switcher', 'options' )): ?>
+        <?php
+            wp_nav_menu([
+                'menu'            => 'Main Navigation',
+                'theme_location'  => 'main_navigation',
+                'container'       => false,
+                'menu_id'         => false,
+                'menu_class'      => 'mobile-nav mr-auto',
+                'walker'          => new bs4navwalker()
+            ]);
+        ?>
 
-            <li class="nav-item dropdown">
-                <a href="#dropdown" class="dropdown-toggle" data-toggle="dropdown">Language</a>
+         <ul class="mobile-nav mr-auto">
 
-                <?php if ( have_rows( 'language', 'options' ) ) : ?>
+            <?php if(get_field( 'show_switcher', 'options' )): ?>
 
-                    <ul>
+                <li class="nav-item dropdown">
+                    <a href="#dropdown" class="dropdown-toggle" data-toggle="dropdown">Language</a>
 
-                         <?php while ( have_rows( 'language', 'options' ) ) : the_row(); ?>
+                    <?php if ( have_rows( 'language', 'options' ) ) : ?>
 
-                            <li>
-                                <a href="<?php the_sub_field( 'url' ); ?>" class="dropdown-item"><?php the_sub_field( 'name' ); ?></a>
-                            </li>
+                        <ul>
 
-                        <?php endwhile; ?>
-                    </ul>
+                             <?php while ( have_rows( 'language', 'options' ) ) : the_row(); ?>
 
-                <?php endif; ?>
+                                <li>
+                                    <a href="<?php the_sub_field( 'url' ); ?>" class="dropdown-item"><?php the_sub_field( 'name' ); ?></a>
+                                </li>
 
-            </li><!-- /.dropdown -->
+                            <?php endwhile; ?>
+                        </ul>
 
-        <?php endif; ?>
+                    <?php endif; ?>
 
-    </ul><!-- /.mobile-nav mr-auto -->
+                </li><!-- /.dropdown -->
+
+            <?php endif; ?>
+
+        </ul><!-- /.mobile-nav mr-auto -->
+    </div>
 </nav><!-- /#mobile-navigation -->

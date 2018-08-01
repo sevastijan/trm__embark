@@ -8,20 +8,33 @@
                 </a>
             </div><!-- /.col col-auto -->
            <div class="col col-auto">
-                <ul id="top-menu" class="navbar-nav mr-auto">
+                <?php
+                    wp_nav_menu([
+                        'menu'            => 'Main Navigation',
+                        'theme_location'  => 'main_navigation',
+                        'container'       => false,
+                        'menu_id'         => false,
+                        'menu_class'      => 'navbar-nav',
+                        'depth'           => 2,
+                        'fallback_cb'     => 'bs4navwalker::fallback',
+                        'walker'          => new bs4navwalker()
+                    ]);
+                ?>
+
+                <!-- <ul id="top-menu" class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about" class="nav-link">About</a>
-                    </li><!-- /.nav-item -->
+                        <a href="<?php //if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#about" class="nav-link">About</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#sectors" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
+                        <a href="<?php //if(!is_front_page()) echo esc_url( home_url( '/' ) );?>#sectors" class="nav-link dropdown-toggle" data-toggle="dropdown">Sector solutions</a>
                         <div class="dropdown-menu">
                             <a href="#banking" class="dropdown-item">Banking</a>
                             <a href="#insurance" class="dropdown-item">Insurance</a>
                             <a href="#landing" class="dropdown-item">Lending</a>
                             <a href="#debt" class="dropdown-item">Debt</a>
                         </div>
-                    </li><!-- /.nav-item dropdown -->
-                </ul><!-- /.navbar-nav mr-auto -->
+                    </li>
+                </ul> -->
                 <button id="mmenu-triger" class="hamburger hamburger--squeeze" type="button" aria-label="Menu">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
