@@ -99,30 +99,30 @@
 
             /* ~~~~~~~~~~ Set animation scroll when URL is with #anchor and make smooth scroll ~~~~~~~~~~ */
 
-            $(function(){
-                if ( window.location.hash ) scroll(0,0);
-                setTimeout( function() { scroll(0,0); }, 1);
+            // $(function(){
+            //     if ( window.location.hash ) scroll(0,0);
+            //     setTimeout( function() { scroll(0,0); }, 1);
 
-                var headerHeight = $('.main-header').height();
+            //     var headerHeight = $('.main-header').height();
 
-                if($('#wpadminbar').length) {
-                    headerHeight += $('#wpadminbar').height();
-                }
+            //     if($('#wpadminbar').length) {
+            //         headerHeight += $('#wpadminbar').height();
+            //     }
 
-                $('a[href*="#"]:not(.mm-next)').on('click', function(e) {
-                    e.preventDefault();
+            //     $('a[href*="#"]:not(.mm-next)').on('click', function(e) {
+            //         e.preventDefault();
 
-                    $('html, body').animate({
-                        scrollTop: ($($(this).attr('href')).offset().top - headerHeight) + 'px'
-                    }, 1000, 'swing');
-                });
+            //         $('html, body').animate({
+            //             scrollTop: ($($(this).attr('href')).offset().top - headerHeight) + 'px'
+            //         }, 1000, 'swing');
+            //     });
 
-                if(window.location.hash) {
-                    $('html, body').animate({
-                        scrollTop: ($(window.location.hash).offset().top - headerHeight) + 'px'
-                    }, 1000, 'swing');
-                }
-            });
+            //     if(window.location.hash) {
+            //         $('html, body').animate({
+            //             scrollTop: ($(window.location.hash).offset().top - headerHeight) + 'px'
+            //         }, 1000, 'swing');
+            //     }
+            // });
 
 
             /* ~~~~~~~~~~ Return to top button ~~~~~~~~~~ */
@@ -216,7 +216,7 @@
             });
 
 
-            /* ~~~~~~~~~~ Fix dropdown in Mobile menu ~~~~~~~~~~ */
+            /* ~~~~~~~~~~ Fix dropdown in Mobile ~~~~~~~~~~ */
 
             $('.mobile-nav .dropdown-menu').removeClass('dropdown-menu');
 

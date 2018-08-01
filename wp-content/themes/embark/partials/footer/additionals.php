@@ -39,5 +39,5 @@
             <?php endif; ?>
 
         </ul><!-- /.mobile-nav mr-auto -->
-    </div>
+    </div><!-- /#subpanel.panel -->
 </nav><!-- /#mobile-navigation -->
