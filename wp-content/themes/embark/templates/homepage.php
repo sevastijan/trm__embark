@@ -11,7 +11,7 @@
 
 <main id="main" class="homepage-template">
 
-	<section class="intro element-paddings">
+	<section id="intro" class="intro element-paddings">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-lg-6">
@@ -60,7 +60,7 @@
 		</div><!-- /.container -->
 	</section><!-- /.intro element-paddings -->
 
-	<section class="customer-area element-padding-bottom">
+	<section id="customer-area" class="customer-area element-padding-bottom">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-md-6 text-auto col-xl-auto">
@@ -172,7 +172,7 @@
 
 	<?php endif; ?>
 
-	<section class="about-why element-paddings">
+	<section id="about-why" class="about-why element-paddings">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center">
@@ -185,7 +185,7 @@
 		</div><!-- /.container -->
 	</section><!-- /.about-why element-paddings -->
 
-	<section class="about-how element-padding-top">
+	<section id="about-how" class="about-how element-padding-top">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10 col-lg-9 mx-auto">
@@ -321,7 +321,7 @@
 		</div><!-- /.container -->
 	</section><!-- /.get-in-touch text-center element-paddings -->
 
-	<section class="cta text-center element-paddings">
+	<section id="cta" class="cta text-center element-paddings">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
