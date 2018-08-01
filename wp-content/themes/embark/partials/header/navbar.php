@@ -44,7 +44,7 @@
             <div class="col col-auto d-none d-md-flex">
                 <div class="row no-gutters align-items-center">
                     <div class="col col-auto">
-                        <a href="#get-in-touch" class="embark-button embark-button--small embark-button__full-background embark-button__full-background--primary-color mt-0">Get in touch</a>
+                        <a href="<?php if(!is_front_page()) echo esc_url( home_url( '/' ) ); ?>#get-in-touch" rel='m_PageScroll2id' class="embark-button embark-button--small embark-button__full-background embark-button__full-background--primary-color mt-0">Get in touch</a>
                     </div><!-- /.col col-auto -->
 
                     <?php if(get_field( 'show_switcher', 'options' )): ?>
